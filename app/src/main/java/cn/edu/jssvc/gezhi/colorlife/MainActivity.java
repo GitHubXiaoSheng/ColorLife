@@ -7,14 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.jssvc.gezhi.colorlife.enter.EnterFragment;
+import cn.edu.jssvc.gezhi.colorlife.search.SearchFragment;
 import cn.edu.jssvc.gezhi.colorlife.home.HomeFragment;
 import cn.edu.jssvc.gezhi.colorlife.my.MyFragment;
 import cn.edu.jssvc.gezhi.colorlife.share.ShareFragment;
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private int index = 0;
     private Fragment mFrag;//当前附加的碎片
     private HomeFragment homeFragment;
-    private EnterFragment enterFragment;
+    private SearchFragment searchFragment;
     private ShareFragment shareFragment;
     private MyFragment myFragment;
     //存放主界面的四个碎片
@@ -48,11 +46,11 @@ public class MainActivity extends AppCompatActivity {
     private void initView(){
         fragmentList = new ArrayList<>();
         homeFragment = new HomeFragment();
-        enterFragment = new EnterFragment();
+        searchFragment = new SearchFragment();
         shareFragment = new ShareFragment();
         myFragment = new MyFragment();
         fragmentList.add(homeFragment);
-        fragmentList.add(enterFragment);
+        fragmentList.add(searchFragment);
         fragmentList.add(shareFragment);
         fragmentList.add(myFragment);
 
@@ -83,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        getSupportFragmentManager().getPrimaryNavigationFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentList.get(position);
-        Log.d(TAG, "loadFragment: 执行了"+position);
             if(mFrag != null){
                 transaction.hide(mFrag);
             }

@@ -9,7 +9,7 @@
     <item
         android:id="@+id/main_navigation_2"
         android:icon="@mipmap/index2"
-        android:title="入驻" />
+        android:title="搜索" />
     <item
         android:id="@+id/main_navigation_3"
         android:icon="@mipmap/index3"
