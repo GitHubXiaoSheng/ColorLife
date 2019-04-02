@@ -1,7 +1,5 @@
-package cn.edu.jssvc.gezhi.colorlife.enter;
+package cn.edu.jssvc.gezhi.colorlife.search;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +8,7 @@ import android.view.ViewGroup;
 
 import cn.edu.jssvc.gezhi.colorlife.R;
 
-public class EnterFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
