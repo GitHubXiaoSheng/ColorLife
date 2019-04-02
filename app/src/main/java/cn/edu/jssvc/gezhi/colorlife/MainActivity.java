@@ -45,12 +45,16 @@ public class MainActivity extends AppCompatActivity {
         switch (index) {
             case R.id.main_navigation_1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new HomeFragment()).commit();
+                break;
             case R.id.main_navigation_2:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new EnterFragment()).commit();
+                break;
             case R.id.main_navigation_3:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new ShareFragment()).commit();
+                break;
             case R.id.main_navigation_4:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new MyFragment()).commit();
+                break;
             default:
                 break;
         }
