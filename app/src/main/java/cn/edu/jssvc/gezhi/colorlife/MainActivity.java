@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> fragmentList;
     //静态变量用于返回主活动的指定碎片使用
     public static int MainHome = 0;
-    public static int MainEntry = 1;
+    public static int MainSearch = 1;
     public static int MainShare = 2;
     public static int MainMy = 3;
     @Override
