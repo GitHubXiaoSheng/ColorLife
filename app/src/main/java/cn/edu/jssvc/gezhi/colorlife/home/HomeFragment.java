@@ -134,8 +134,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset,
-                               int positionOffsetPixels) {
+    public void onPageScrolled(int position, float positionOffset,int positionOffsetPixels) {
         // 滚动时调用
     }
 
