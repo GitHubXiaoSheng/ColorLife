@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:28.0.0'
@@ -31,5 +31,8 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     //圆角图片
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
+    //Glide
+    implementation files('libs/glide-full-4.7.0.jar')
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
