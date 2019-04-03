@@ -11,17 +11,20 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.edu.jssvc.gezhi.colorlife.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
+public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
     private TextView textView_shenqing,             //申请认证
                     textView_title;                  //ViewPager的标题
     private ViewPager viewPager;                     //存放图片的ViewPager
@@ -33,6 +36,12 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private int CHUSHI_POSITION = 0;               //初始位置
 
     private Timer timer;
+
+    private MyListView myListView;
+    private List<String> stringList = new ArrayList<>();
+    private ArrayAdapter arrayAdapter;
+
+    private CircleImageView imageView_fenlei_1,imageView_fenlei_2,imageView_fenlei_3,imageView_fenlei_4,imageView_fenlei_5,imageView_fenlei_6,imageView_fenlei_7,imageView_fenlei_8;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +64,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 handler.sendMessage(message);
             }
         },0,3000);
+
 
     }
 
@@ -81,6 +91,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     private void init() {
         textView_shenqing = getActivity().findViewById(R.id.home_ShenqingRenzheng);
+        textView_shenqing.setOnClickListener(this);
         textView_title = getActivity().findViewById(R.id.home_title);
         viewPager = getActivity().findViewById(R.id.home_ViewPager);
         viewPager.setOnPageChangeListener(this);// 设置页面更新监听
@@ -114,9 +125,58 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             pointView.setEnabled(false);
             linearLayout_yuandian.addView(pointView, layoutParams);
         }
+        stringList.add("351");
+        stringList.add("351");
+        stringList.add("351");
+        stringList.add("351");
+        myListView = getActivity().findViewById(R.id.home_myListView);
+        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, stringList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_expandable_list_item_1);
+        myListView.setAdapter(arrayAdapter);
 
+        imageView_fenlei_1 = getActivity().findViewById(R.id.image_fenlei_1);
+        imageView_fenlei_2 = getActivity().findViewById(R.id.image_fenlei_2);
+        imageView_fenlei_3 = getActivity().findViewById(R.id.image_fenlei_3);
+        imageView_fenlei_4 = getActivity().findViewById(R.id.image_fenlei_4);
+        imageView_fenlei_5 = getActivity().findViewById(R.id.image_fenlei_5);
+        imageView_fenlei_6 = getActivity().findViewById(R.id.image_fenlei_6);
+        imageView_fenlei_7 = getActivity().findViewById(R.id.image_fenlei_7);
+        imageView_fenlei_8 = getActivity().findViewById(R.id.image_fenlei_8);
+        imageView_fenlei_1.setOnClickListener(this);
+        imageView_fenlei_2.setOnClickListener(this);
+        imageView_fenlei_3.setOnClickListener(this);
+        imageView_fenlei_4.setOnClickListener(this);
+        imageView_fenlei_5.setOnClickListener(this);
+        imageView_fenlei_6.setOnClickListener(this);
+        imageView_fenlei_7.setOnClickListener(this);
+        imageView_fenlei_8.setOnClickListener(this);
 
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_ShenqingRenzheng:
+                break;
+            case R.id.image_fenlei_1:
+                break;
+            case R.id.image_fenlei_2:
+                break;
+            case R.id.image_fenlei_3:
+                break;
+            case R.id.image_fenlei_4:
+                break;
+            case R.id.image_fenlei_5:
+                break;
+            case R.id.image_fenlei_6:
+                break;
+            case R.id.image_fenlei_7:
+                break;
+            case R.id.image_fenlei_8:
+                break;
+            default:
+                break;
+        }
     }
 
     private void initAdapter() {
