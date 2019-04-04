@@ -1,4 +1,4 @@
-package cn.edu.jssvc.gezhi.colorlife.enter;
+package cn.edu.jssvc.gezhi.colorlife.my;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 
 import cn.edu.jssvc.gezhi.colorlife.R;
 
-public class EnterFragment extends Fragment {
+public class My_item2Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_enter, container, false);
+        return inflater.inflate(R.layout.fragment_my_item2, container, false);
     }
-
 }

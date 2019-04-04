@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:orientation="vertical"
+    android:layout_gravity="center|top"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <ImageView
+        android:id="@+id/leibie_gridView_image"
+        android:layout_width="match_parent"
+        android:layout_height="140dp" />
+
+    <TextView
+        android:id="@+id/leibie_gridView_title"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center|left"
+        android:textSize="17dp"
+        android:text=""/>
+    <TextView
+        android:id="@+id/leibie_gridView_fujia"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="top|left"
+        android:textSize="10dp"
+        android:text=""/>
+    <TextView
+        android:id="@+id/leibie_gridView_time"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:gravity="center|right"
+        android:textSize="8dp"
+        android:text=""/>
+
+</LinearLayout>
