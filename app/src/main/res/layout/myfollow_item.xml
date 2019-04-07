@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:background="@drawable/zl_boder_tb"
+    android:gravity="center_vertical"
+    android:layout_height="80dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_myfollow_head_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_launcher_background"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="70dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/item_myfollow_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="#000"/>
+        <TextView
+            android:id="@+id/item_myfollow_details_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/text_gray"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/item_myfollow_follow_btn"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="已关注"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:background="#DCDCDC"/>
+
+</LinearLayout>
