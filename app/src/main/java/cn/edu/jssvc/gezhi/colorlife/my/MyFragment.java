@@ -4,6 +4,7 @@ package cn.edu.jssvc.gezhi.colorlife.my;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import cn.edu.jssvc.gezhi.colorlife.R;
+import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
+import cn.edu.jssvc.gezhi.colorlife.login.LoginActivity;
 import cn.edu.jssvc.gezhi.colorlife.my.follow.MyFollowActivity;
 import cn.edu.jssvc.gezhi.colorlife.my.item1.MyItem1Activity;
 
 public class MyFragment extends Fragment implements View.OnClickListener{
+    private String TAG = "MyFragment";
     private View view;
     private TextView nameTv;//用户名
 //    private TextView myHomeTv;//我的主页
@@ -33,6 +40,8 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     private RelativeLayout item5;
     private RelativeLayout item6;
     private RelativeLayout item7;
+
+    private MemberInfo memberInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +70,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
         item5 = (RelativeLayout) view.findViewById(R.id.fragmy_item5_layout);
         item6 = (RelativeLayout) view.findViewById(R.id.fragmy_item6_layout);
         item7 = (RelativeLayout) view.findViewById(R.id.fragmy_item7_layout);
+
     }
 
     /**
@@ -100,6 +110,8 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             case R.id.fragmy_head_fabulous_tv:
                 break;
             case R.id.fragmy_head_img:
+                Intent headIntent = new Intent(getActivity(), LoginActivity.class);
+                startActivityForResult(headIntent,1);
                 break;
             case R.id.fragmy_item1_layout:
                 break;
@@ -120,5 +132,24 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            memberInfo = (MemberInfo)data.getSerializableExtra("memberInfo");
+            if(memberInfo != null){
+                Glide.with(this).load(memberInfo.getPhotoUrl()).into(headImg);
+                nameTv.setText(memberInfo.getNickName());
+                gradeTv.setText("Lv." + memberInfo.getLevel());
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }
