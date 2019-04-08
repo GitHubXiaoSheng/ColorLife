@@ -93,7 +93,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="right|center">
+        android:gravity="right|center"
+        android:paddingRight="5dp"
+        android:background="#B4CDCD">
         <Button
             android:id="@+id/contentactivity_gouwuche"
             android:layout_width="100dp"
