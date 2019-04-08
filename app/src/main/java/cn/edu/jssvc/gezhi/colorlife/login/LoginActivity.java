@@ -141,11 +141,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 2){
-            MemberInfo memberInfo = (MemberInfo) data.getSerializableExtra("register");
-            if(memberInfo != null){
-                dbDao = new DbDao();
-                login_account.setText(memberInfo.getNickName());
-                login_password.setText(memberInfo.getPassword());
+            if(data != null){
+                MemberInfo memberInfo = (MemberInfo) data.getSerializableExtra("register");
+                if(memberInfo != null){
+                    dbDao = new DbDao();
+                    login_account.setText(memberInfo.getNickName());
+                    login_password.setText(memberInfo.getPassword());
+                }
             }
         }
     }

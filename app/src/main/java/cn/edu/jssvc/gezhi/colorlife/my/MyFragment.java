@@ -138,11 +138,13 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            memberInfo = (MemberInfo)data.getSerializableExtra("memberInfo");
-            if(memberInfo != null){
-                Glide.with(this).load(memberInfo.getPhotoUrl()).into(headImg);
-                nameTv.setText(memberInfo.getNickName());
-                gradeTv.setText("Lv." + memberInfo.getLevel());
+            if(data != null){
+                memberInfo = (MemberInfo)data.getSerializableExtra("memberInfo");
+                if(memberInfo != null){
+                    Glide.with(this).load(memberInfo.getPhotoUrl()).into(headImg);
+                    nameTv.setText(memberInfo.getNickName());
+                    gradeTv.setText("Lv." + memberInfo.getLevel());
+                }
             }
         }
     }
