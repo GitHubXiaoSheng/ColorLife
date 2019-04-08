@@ -1,4 +1,4 @@
-package cn.edu.jssvc.gezhi.colorlife.my;
+package cn.edu.jssvc.gezhi.colorlife.my.item1;
 
 public class Item1_Bean {
     private String headImgUrl;

@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="home_title">#00574B</color>
+    <color name="fragmy_back">#fff</color>
+    <color name="text_gray">#515151</color>
 
 </resources>

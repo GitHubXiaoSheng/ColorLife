@@ -1,4 +1,4 @@
-package cn.edu.jssvc.gezhi.colorlife.my;
+package cn.edu.jssvc.gezhi.colorlife.my.item1;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

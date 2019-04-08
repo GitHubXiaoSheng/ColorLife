@@ -1,7 +1,5 @@
-package cn.edu.jssvc.gezhi.colorlife.my;
+package cn.edu.jssvc.gezhi.colorlife.my.item1;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +14,7 @@ import java.util.List;
 import cn.edu.jssvc.gezhi.colorlife.R;
 
 public class My_item1Fragment extends Fragment {
+    private String TAG = "My_item1Fragment";
     private View view;
     private RecyclerView recyclerView;
     private Item1_Adapter adapter;
@@ -28,7 +27,6 @@ public class My_item1Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my_item1, container, false);
         initView();
         initData();
-        setListener();
         return view;
     }
 
@@ -42,10 +40,9 @@ public class My_item1Fragment extends Fragment {
     }
 
     private void initData(){
-        beanList.add(new Item1_Bean("", "一口蒸鸡蛋", "", 24, 35, 62));
+        for (int i = 0; i < 5; i++) {
+            beanList.add(new Item1_Bean("", "一口蒸鸡蛋", "", 24, 35, 62));
+        }
         adapter.notifyDataSetChanged();
     }
-
-    private void setListener(){}
-
 }
