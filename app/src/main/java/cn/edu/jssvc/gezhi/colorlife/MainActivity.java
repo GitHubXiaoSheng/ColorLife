@@ -2,15 +2,12 @@ package cn.edu.jssvc.gezhi.colorlife;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import cn.edu.jssvc.gezhi.colorlife.enter.EnterFragment;
 import cn.edu.jssvc.gezhi.colorlife.home.HomeFragment;
 import cn.edu.jssvc.gezhi.colorlife.my.MyFragment;
+import cn.edu.jssvc.gezhi.colorlife.search.SearchFragment;
 import cn.edu.jssvc.gezhi.colorlife.share.ShareFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new HomeFragment()).commit();
                 break;
             case R.id.main_navigation_2:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new EnterFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new SearchFragment()).commit();
                 break;
             case R.id.main_navigation_3:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new ShareFragment()).commit();
