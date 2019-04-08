@@ -61,9 +61,9 @@
                     android:id="@+id/contentactivity_time"
                     android:layout_width="200dp"
                     android:layout_height="match_parent"
-                    android:gravity="center|right"
+                    android:gravity="bottom|right"
                     android:text="发布日期：2019-02-12"
-                    android:textSize="15dp"
+                    android:textSize="9dp"
                     android:textColor="#aaaaaa"/>
             </LinearLayout>
             <TextView
@@ -86,6 +86,10 @@
                 android:textColor="#666666"/>
         </LinearLayout>
     </ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999999"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
