@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -108,6 +109,14 @@ public class Leibie_Activity extends AppCompatActivity {
         gridView.setFocusable(false);
         itemAdapter = new ItemAdapter(Leibie_Activity.this, R.layout.leibie_activity_gridview_item, itemList);
         gridView.setAdapter(itemAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Leibie_Activity.this, ContentActivity.class);
+                intent.putExtra("id", "");
+                startActivity(intent);
+            }
+        });
     }
 
 }

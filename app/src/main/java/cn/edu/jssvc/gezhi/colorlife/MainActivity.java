@@ -2,13 +2,9 @@ package cn.edu.jssvc.gezhi.colorlife;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-//import cn.edu.jssvc.gezhi.colorlife.enter.EnterFragment;
 import cn.edu.jssvc.gezhi.colorlife.home.HomeFragment;
 import cn.edu.jssvc.gezhi.colorlife.my.MyFragment;
 import cn.edu.jssvc.gezhi.colorlife.search.SearchFragment;
