@@ -2,29 +2,104 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#008577">
+            <ImageView
+                android:id="@+id/contentactivity_back"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/zzj_back"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/leibieactivity_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="17dp"
+                android:textColor="#ffffff"/>
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/contentactivity_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:gravity="center|right"
+                android:text="￥"
+                android:textSize="17dp"
+                android:textColor="#FF7F00"/>
+            <TextView
+                android:id="@+id/contentactivity_money"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textSize="17dp"
+                android:textColor="#FF7F00"
+                android:text="1000"/>
+            <TextView
+                android:id="@+id/contentactivity_time"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="center|right"
+                android:text="发布日期：2019-02-12"
+                android:textSize="15dp"
+                android:textColor="#aaaaaa"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/contentactivity_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center|left"
+            android:text="dafeeee"
+            android:textSize="20dp"
+            android:textColor="#333333"/>
+        <TextView
+            android:id="@+id/contentactivity_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:gravity="center|left"
+            android:text="dafeeee"
+            android:textSize="15dp"
+            android:textColor="#666666"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#008577">
-        <ImageView
-            android:id="@+id/contentactivity_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/zzj_back"
-            android:padding="5dp"/>
-        <TextView
-            android:id="@+id/leibieactivity_title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="17dp"
+        android:layout_height="50dp"
+        android:gravity="right|center">
+        <Button
+            android:id="@+id/contentactivity_gouwuche"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/zzj_content_gouwuche"
+            android:text="加入购物车"
             android:textColor="#ffffff"/>
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/contentactivity_goumai"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/zzj_content_lijigoumai"
+            android:text="立即购买"
+            android:textColor="#ffffff"/>
     </LinearLayout>
-
 </LinearLayout>
