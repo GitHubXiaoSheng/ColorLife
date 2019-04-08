@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         }
         tuijianAdapter.notifyDataSetChanged();
         // 图片资源id数组
-        imageResIds = new int[]{R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d};
+        imageResIds = new int[]{R.drawable.zzj_a, R.drawable.zzj_b, R.drawable.zzj_c, R.drawable.zzj_d};
         // 文本描述
         contentDescs = new String[]{
                 "油画佳作折扣聚惠",
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
             // 加小白点, 指示器
             pointView = new View(getContext());
-            pointView.setBackgroundResource(R.drawable.a);
+            pointView.setBackgroundResource(R.drawable.zzj_a);
             layoutParams = new LinearLayout.LayoutParams(5, 5);
             if (i != 0)
                 layoutParams.leftMargin = 10;
