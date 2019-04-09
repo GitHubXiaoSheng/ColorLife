@@ -17,10 +17,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import cn.edu.jssvc.gezhi.colorlife.MainActivity;
+import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
@@ -95,46 +100,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void submit() {
         // validate
-        String account = login_account.getText().toString().trim();
+        final String account = login_account.getText().toString().trim();
         if (TextUtils.isEmpty(account)) {
             Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String password = login_password.getText().toString().trim();
+        final String password = login_password.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
         conn = dbDao.getConn();
         if (conn != null) {
-//            memberInfo = dbDao.queryMemberInfo(account, password);
-//            if(memberInfo != null){
-//                Intent intent = new Intent();
-//                intent.putExtra("memberInfo", memberInfo);
-//                setResult(RESULT_OK, intent);
-//                finish();
-//            }
-            memberInfoList = DbDao.getmMemberInfoList();
-            if (memberInfoList.size() > 0) {
-                for (MemberInfo element : memberInfoList) {
-                    if (element.getNickName().equals(account) && element.getPassword().equals(password)) {
-                        Log.d("tag-signin","success");
-                        memberInfo = element;
-                        Intent intent = new Intent();
-                        intent.putExtra("memberInfo", memberInfo);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                        break;
-                    }
+            if (loginProving(account, password)) {
+                try {
+                    conn.close();
+                    Intent intent = new Intent();
+                    intent.putExtra("memberInfo", memberInfo);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            }else {
-                Log.d("tag-signin", "failed");
-                Toast.makeText(this, "您还没有注册哦！", Toast.LENGTH_LONG).show();
+
             }
         }
-
-
     }
 
     @Override
@@ -153,15 +144,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    //    private void displayImage(String imagePath) {
-//        if (imagePath != null) {
-////            Bitmap bitmap = BitmapFactory.decodeFile( imagePath );
-//            Glide.with(this)
-//                    .load(imagePath)
-////                    .override(100,100)//这里的单位是px
-//                    .into(login_headimg);
-////            artImg.setImageBitmap( bitmap );
-//        }
-//    }
-
+    /**
+     * 验证用户是否存在
+     * @param account 账号
+     * @param password 密码
+     * @return 返回能否登录
+     */
+    private boolean loginProving(final String account, final String password){
+        Future<MemberInfo> future = MyApplication.executorService.submit(new Callable<MemberInfo>() {
+            @Override
+            public MemberInfo call() throws Exception {
+                return dbDao.queryMemberInfo(account,password);
+            }
+        });
+        try {
+            Log.d(TAG, "testE: "+future.get().toString());
+            if(future.get()!=null){
+                memberInfo = future.get();
+                return true;
+            }else {
+                Toast.makeText(this,"账号或者密码错误！",Toast.LENGTH_SHORT).show();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

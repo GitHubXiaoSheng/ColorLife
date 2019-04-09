@@ -143,7 +143,7 @@ public class DbDao {
             String sql = "select * from member_info where nick_name = \'"+account+"\' and password = \'"+password+"\'";
             ps = (PreparedStatement) conn.prepareStatement( sql );
             resultSet = ps.executeQuery();
-            if(resultSet!= null){
+            if(resultSet.next()){
                 memberInfo = new MemberInfo();
                 memberInfo.setId( resultSet.getInt( "member_id" ) );
                 memberInfo.setNickName( resultSet.getString( "nick_name" ) );
@@ -163,6 +163,7 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+//        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
         return memberInfo;
     }
 

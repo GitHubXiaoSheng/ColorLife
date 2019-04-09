@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center_vertical"
+        android:background="@color/home_title"
         >
         <ImageView
             android:id="@+id/login_back_img"
@@ -15,15 +16,26 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/zl_back"/>
+            android:src="@drawable/zzj_back"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/text_gray"
+            android:textColor="#fff"
             android:textSize="25sp"
             android:text="登录"/>
+
+        <TextView
+            android:id="@+id/login_register"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:text="注册" />
 
     </RelativeLayout>
 
@@ -60,10 +72,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="16dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_weight="1">
+        >
 
         <CheckBox
             android:id="@+id/login_remember"
@@ -79,7 +92,7 @@
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/login_register"
+            android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="#000"
             android:text="忘记密码" />
@@ -96,17 +109,6 @@
             android:textSize="20dp" />
 
 
-
-
-        <TextView
-            android:id="@+id/login_register"
-            android:layout_width="80dp"
-            android:layout_height="32dp"
-            android:gravity="center"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textColor="#000"
-            android:text="注册" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,5 +157,6 @@
             <!--android:background="@color/colorPrimaryDark" />-->
 
     </RelativeLayout>
+
 </LinearLayout>
 
