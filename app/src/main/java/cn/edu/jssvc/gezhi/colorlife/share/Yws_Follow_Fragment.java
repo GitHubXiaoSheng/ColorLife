@@ -16,10 +16,11 @@ import cn.edu.jssvc.gezhi.colorlife.R;
 
 public class Yws_Follow_Fragment extends Fragment {
     private List<Yws_Follow> myfollowlist=new ArrayList<>();
+    private View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.yws_fragment_follow, container, false);
+         view= inflater.inflate(R.layout.yws_fragment_follow, container, false);
         return view;
     }
 
@@ -27,7 +28,7 @@ public class Yws_Follow_Fragment extends Fragment {
     public void onStart() {
         super.onStart();
         initview();
-        RecyclerView recyclerView=(RecyclerView)getActivity().findViewById(R.id.follow_recyclerview);
+        RecyclerView recyclerView=(RecyclerView)view.findViewById(R.id.follow_recyclerview);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
