@@ -65,9 +65,40 @@
                     <LinearLayout
                         android:id="@+id/home_yuandain"
                         android:layout_width="match_parent"
-                        android:layout_height="18dp"
+                        android:layout_height="15dp"
                         android:orientation="horizontal"
-                        android:gravity="center"/>
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/home_yuan_1"
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/zzj_yuan_click"/>
+                        <TextView
+                            android:id="@+id/home_yuan_2"
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/zzj_yuan"/>
+                        <TextView
+                            android:id="@+id/home_yuan_3"
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/zzj_yuan"/>
+                        <TextView
+                            android:id="@+id/home_yuan_4"
+                            android:layout_width="15dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/zzj_yuan"/>
+
+                    </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
