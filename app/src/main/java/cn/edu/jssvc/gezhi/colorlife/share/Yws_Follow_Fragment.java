@@ -17,12 +17,14 @@ import cn.edu.jssvc.gezhi.colorlife.R;
 public class Yws_Follow_Fragment extends Fragment {
     private List<Yws_Follow> myfollowlist=new ArrayList<>();
     private View view;
+    private String title;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          view= inflater.inflate(R.layout.yws_fragment_follow, container, false);
         return view;
     }
+
 
     @Override
     public void onStart() {

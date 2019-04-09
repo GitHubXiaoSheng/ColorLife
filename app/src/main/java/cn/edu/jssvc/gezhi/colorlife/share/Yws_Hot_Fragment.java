@@ -63,8 +63,11 @@ public class Yws_Hot_Fragment extends Fragment {
             list.add("更多");
 
             Yws_Remcommend_Fragment testFragment = new Yws_Remcommend_Fragment();
-            testFragment.initView(list.get(i));
+            Yws_Follow_Fragment fragment=new Yws_Follow_Fragment();
+//            testFragment.initView(list.get(i));
             listFragment.add(testFragment);
+            listFragment.add(fragment);
+
 
         }
 
