@@ -34,7 +34,7 @@ public class Item1_Adapter extends RecyclerView.Adapter<Item1_Adapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         Item1_Bean bean = beanList.get(i);
         holder.headImg.setImageResource(R.mipmap.default_head);
-        holder.contentImg.setImageResource(R.drawable.a);
+        holder.contentImg.setImageResource(R.drawable.zzj_a);
         holder.name.setText(bean.getName());
         holder.share.setText(String.valueOf(bean.getShare()));
         holder.comment.setText(String.valueOf(bean.getComment()));

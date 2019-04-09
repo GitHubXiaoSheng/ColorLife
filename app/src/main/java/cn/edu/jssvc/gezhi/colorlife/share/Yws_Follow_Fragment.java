@@ -20,7 +20,6 @@ public class Yws_Follow_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.yws_fragment_follow, container, false);
-
         return view;
     }
 

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+
 import cn.edu.jssvc.gezhi.colorlife.R;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
