@@ -34,9 +34,9 @@ public class Yws_recommend_adapter extends RecyclerView.Adapter<Yws_recommend_ad
             imageView4=(ImageView)itemView.findViewById(R.id.image_4_recommend);
             imageView5=(ImageView)itemView.findViewById(R.id.image_5_recommend);
             imageView6=(ImageView)itemView.findViewById(R.id.image_6_recommend);
-            imageView7=(ImageView)itemView.findViewById(R.id.image_7_recommend);
-            imageView8=(ImageView)itemView.findViewById(R.id.image_8_recommend);
-            imageView9=(ImageView)itemView.findViewById(R.id.image_9_recommend);
+//            imageView7=(ImageView)itemView.findViewById(R.id.image_7_recommend);
+//            imageView8=(ImageView)itemView.findViewById(R.id.image_8_recommend);
+//            imageView9=(ImageView)itemView.findViewById(R.id.image_9_recommend);
         }
     }
 
@@ -68,9 +68,9 @@ public class Yws_recommend_adapter extends RecyclerView.Adapter<Yws_recommend_ad
         viewHolder.imageView4.setImageResource(yws_remcomend.getImg_remcommend_4());
         viewHolder.imageView5.setImageResource(yws_remcomend.getImg_remcommend_5());
         viewHolder.imageView6.setImageResource(yws_remcomend.getImg_remcommend_6());
-        viewHolder.imageView7.setImageResource(yws_remcomend.getImg_remcommend_7());
-        viewHolder.imageView8.setImageResource(yws_remcomend.getImg_remcommend_8());
-        viewHolder.imageView9.setImageResource(yws_remcomend.getImg_remcommend_9());
+//        viewHolder.imageView7.setImageResource(yws_remcomend.getImg_remcommend_7());
+//        viewHolder.imageView8.setImageResource(yws_remcomend.getImg_remcommend_8());
+//        viewHolder.imageView9.setImageResource(yws_remcomend.getImg_remcommend_9());
 
     }
 

@@ -55,21 +55,11 @@ public class Yws_Recommend {
         return img_remcommend_6;
     }
 
-    public int getImg_remcommend_7() {
-        return img_remcommend_7;
-    }
-
-    public int getImg_remcommend_8() {
-        return img_remcommend_8;
-    }
-
-    public int getImg_remcommend_9() {
-        return img_remcommend_9;
-    }
 
 
 
-    public Yws_Recommend(String text_remcommend_name, String text_remcommend_time, String text_remcommend_content, String text_remcommend_zhuanfa, String text_remcommend_commemt, String text_remcommend_like, int img_remcommend_head, int img_remcommend_1, int img_remcommend_2, int img_remcommend_3, int img_remcommend_4, int img_remcommend_5, int img_remcommend_6, int img_remcommend_7, int img_remcommend_8, int img_remcommend_9) {
+
+    public Yws_Recommend(String text_remcommend_name, String text_remcommend_time, String text_remcommend_content, String text_remcommend_zhuanfa, String text_remcommend_commemt, String text_remcommend_like, int img_remcommend_head, int img_remcommend_1, int img_remcommend_2, int img_remcommend_3, int img_remcommend_4, int img_remcommend_5, int img_remcommend_6) {
         this.text_remcommend_name = text_remcommend_name;
         this.text_remcommend_time = text_remcommend_time;
         this.text_remcommend_content = text_remcommend_content;
@@ -83,11 +73,8 @@ public class Yws_Recommend {
         this.img_remcommend_4 = img_remcommend_4;
         this.img_remcommend_5 = img_remcommend_5;
         this.img_remcommend_6 = img_remcommend_6;
-        this.img_remcommend_7 = img_remcommend_7;
-        this.img_remcommend_8 = img_remcommend_8;
-        this.img_remcommend_9 = img_remcommend_9;
+
     }
 
-    private int img_remcommend_head,img_remcommend_1,img_remcommend_2,img_remcommend_3,img_remcommend_4,img_remcommend_5,img_remcommend_6,
-            img_remcommend_7,img_remcommend_8,img_remcommend_9;
+    private int img_remcommend_head,img_remcommend_1,img_remcommend_2,img_remcommend_3,img_remcommend_4,img_remcommend_5,img_remcommend_6;
 }
