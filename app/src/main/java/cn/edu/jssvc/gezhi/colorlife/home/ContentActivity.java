@@ -10,6 +10,7 @@ import cn.edu.jssvc.gezhi.colorlife.R;
 public class ContentActivity extends AppCompatActivity {
 
     private ImageView imageView_back;      //返回按钮
+    private ImageView imageView_src;       //图片资源
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +28,6 @@ public class ContentActivity extends AppCompatActivity {
                 finish();
             }
         });
+        imageView_src = findViewById(R.id.contentactivity_image);
     }
 }
