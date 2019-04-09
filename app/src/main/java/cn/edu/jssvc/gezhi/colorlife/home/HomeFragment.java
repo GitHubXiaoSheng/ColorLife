@@ -1,14 +1,19 @@
 package cn.edu.jssvc.gezhi.colorlife.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,18 +29,18 @@ import java.util.TimerTask;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView textView_shenqing,             //申请认证
                     textView_title;                  //ViewPager的标题
     private ViewPager viewPager;                     //存放图片的ViewPager
-    private LinearLayout linearLayout_yuandian;    //存放小圆点的容器
+    private TextView textView_1,textView_2,textView_3,textView_4;   //圆点
 
-    private int[] imageResIds;                      //ViewPager图片
-    private String[] contentDescs;                  //ViewPager标题
-    private ArrayList<ImageView> imageViewList = new ArrayList<>();
-    private int CHUSHI_POSITION = 0;               //初始位置
+    private int[] imageInt;
+    private String[] titleString;
+    private List<ImageView> imageViewList = new ArrayList<>();
 
     private Timer timer;
+    private int count = 0;
 
     private MyListView myListView;
     private Tuijian tuijian;
@@ -53,8 +58,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         init();
-        // Controller 控制器
-        initAdapter();
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -66,7 +69,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             }
         },0,3000);
 
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -76,7 +78,13 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                    if (count == 5) {
+                        viewPager.setCurrentItem(0);
+                        count = 0;
+                    }else {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                        count ++;
+                    }
                     break;
                 default:
                     break;
@@ -99,9 +107,25 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         textView_shenqing = getActivity().findViewById(R.id.home_ShenqingRenzheng);
         textView_shenqing.setOnClickListener(this);
         textView_title = getActivity().findViewById(R.id.home_title);
+
+        textView_1 = getActivity().findViewById(R.id.home_yuan_1);
+        textView_2 = getActivity().findViewById(R.id.home_yuan_2);
+        textView_3 = getActivity().findViewById(R.id.home_yuan_3);
+        textView_4 = getActivity().findViewById(R.id.home_yuan_4);
+
         viewPager = getActivity().findViewById(R.id.home_ViewPager);
-        viewPager.setOnPageChangeListener(this);// 设置页面更新监听
-        linearLayout_yuandian = getActivity().findViewById(R.id.home_yuandain);
+        viewPager.setOnPageChangeListener(listener);
+        imageInt = new int[]{R.drawable.zzj_a,R.drawable.zzj_b,R.drawable.zzj_c,R.drawable.zzj_d};
+        titleString = new String[]{"油画佳作折扣聚会","双十一狂欢提前购","水彩佳作必买清单","国画佳作今日必抢"};
+        ImageView imageView;
+        for (int i = 0; i < imageInt.length; i++) {
+            imageView = new ImageView(getContext());
+            imageView.setBackgroundResource(imageInt[i]);//设置图片
+            imageViewList.add(imageView);
+        }
+        viewPager.setAdapter(new ImagePagerAdapter(getContext(),imageViewList));
+        viewPager.setCurrentItem(0);
+        textView_title.setText(titleString[0]);
 
         addListViewData();
 
@@ -130,35 +154,40 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             tuijianList.add(tuijian);
         }
         tuijianAdapter.notifyDataSetChanged();
-        // 图片资源id数组
-        imageResIds = new int[]{R.drawable.zzj_a, R.drawable.zzj_b, R.drawable.zzj_c, R.drawable.zzj_d};
-        // 文本描述
-        contentDescs = new String[]{
-                "油画佳作折扣聚惠",
-                "双十一狂欢提前购",
-                "水彩佳作必买清单",
-                "国画佳作今日必抢"
-        };
-        ImageView imageView;
-        View pointView;
-        LinearLayout.LayoutParams layoutParams;
-        for (int i = 0; i < imageResIds.length; i++) {
-            // 初始化要显示的图片对象
-            imageView = new ImageView(getContext());
-            imageView.setBackgroundResource(imageResIds[i]);
-            imageViewList.add(imageView);
-
-            // 加小白点, 指示器
-            pointView = new View(getContext());
-            pointView.setBackgroundResource(R.drawable.zzj_a);
-            layoutParams = new LinearLayout.LayoutParams(5, 5);
-            if (i != 0)
-                layoutParams.leftMargin = 10;
-            // 设置默认所有都不可用
-            pointView.setEnabled(false);
-            linearLayout_yuandian.addView(pointView, layoutParams);
-        }
     }
+
+    private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {}
+        @Override
+        public void onPageSelected(int i) {
+            imageViewList.get(i);
+            textView_title.setText(titleString[i]);
+            if (i == 0) {
+                textView_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan_click));
+                textView_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+            } else if (i == 1) {
+                textView_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan_click));
+                textView_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+            } else if (i == 2) {
+                textView_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan_click));
+                textView_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+            } else if (i == 3) {
+                textView_1.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_2.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_3.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan));
+                textView_4.setBackgroundDrawable(getResources().getDrawable(R.drawable.zzj_yuan_click));
+            }
+        }
+        @Override
+        public void onPageScrollStateChanged(int i) {}
+    };
 
     @Override
     public void onClick(View v) {
@@ -210,88 +239,35 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         }
     }
 
-    private void initAdapter() {
-        linearLayout_yuandian.getChildAt(0).setEnabled(true);
-        textView_title.setText(contentDescs[0]);
-        CHUSHI_POSITION = 0;
-
-        // 设置适配器
-        viewPager.setAdapter(new MyAdapter());
-
-        // 默认设置到中间的某个位置
-        int pos = Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2 % imageViewList.size());
-        // 2147483647 / 2 = 1073741823 - (1073741823 % 5)
-        viewPager.setCurrentItem(5000000); // 设置到某个位置
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset,int positionOffsetPixels) {
-        // 滚动时调用
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        // 新的条目被选中时调用
-//        System.out.println("onPageSelected: " + position);
-        int newPosition = position % imageViewList.size();
-
-        //设置文本
-        textView_title.setText(contentDescs[newPosition]);
-
-        // 把之前的禁用, 把最新的启用, 更新指示器
-        linearLayout_yuandian.getChildAt(CHUSHI_POSITION).setEnabled(false);
-        linearLayout_yuandian.getChildAt(newPosition).setEnabled(true);
-
-        // 记录之前的位置
-        CHUSHI_POSITION = newPosition;
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        // 滚动状态变化时调用
-    }
-
-    class MyAdapter extends PagerAdapter {
-
+    public class ImagePagerAdapter extends PagerAdapter {
+        protected Context context;
+        protected List<ImageView> images;
+        public ImagePagerAdapter(Context context, List<ImageView> images){
+            this.context=context;
+            this.images=images;
+        }
         @Override
         public int getCount() {
-            return Integer.MAX_VALUE;
+            //对数据作非空判断
+            return null!=images?images.size():0;
         }
 
-        // 3. 指定复用的判断逻辑, 固定写法
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            container.addView(images.get(position));
+            return images.get(position);
+        }
+
         @Override
         public boolean isViewFromObject(View view, Object object) {
-//			System.out.println("isViewFromObject: "+(view == object));
-            // 当划到新的条目, 又返回来, view是否可以被复用.
-            // 返回判断规则
             return view == object;
         }
 
-        // 1. 返回要显示的条目内容, 创建条目
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-//            System.out.println("instantiateItem初始化: " + position);
-            // container: 容器: ViewPager
-            // position: 当前要显示条目的位置 0 -> 4
-
-//			newPosition = position % 5
-            int newPosition = position % imageViewList.size();
-
-            ImageView imageView = imageViewList.get(newPosition);
-            // a. 把View对象添加到container中
-            container.addView(imageView);
-            // b. 把View对象返回给框架, 适配器
-            return imageView; // 必须重写, 否则报异常
-        }
-
-        // 2. 销毁条目
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            // object 要销毁的对象
-//            System.out.println("destroyItem销毁: " + position);
-            container.removeView((View) object);
+            container.removeView(images.get(position));
         }
     }
+
 
 }
