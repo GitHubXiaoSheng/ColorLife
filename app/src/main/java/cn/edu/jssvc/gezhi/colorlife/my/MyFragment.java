@@ -1,6 +1,5 @@
 package cn.edu.jssvc.gezhi.colorlife.my;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -123,7 +122,8 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.fragmy_item4_layout:
                 break;
-            case R.id.fragmy_item5_layout:
+            case R.id.fragmy_item5_layout://上传作品
+
                 break;
             case R.id.fragmy_item6_layout:
                 break;
