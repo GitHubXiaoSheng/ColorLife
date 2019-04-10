@@ -29,6 +29,7 @@ import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
+import cn.edu.jssvc.gezhi.colorlife.photo.PhotoUtil;
 import cn.edu.jssvc.gezhi.colorlife.register.RegisterActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -40,6 +40,7 @@ import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
 import cn.edu.jssvc.gezhi.colorlife.http.WebApi;
 import cn.edu.jssvc.gezhi.colorlife.http.WebListener;
 import cn.edu.jssvc.gezhi.colorlife.photo.PhotoUtil;
+import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -107,8 +108,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.singup_headimg_img:
-                isGrantedPermission(this);
-                PhotoUtil.openAlbum(this);
+                if (isGrantedPermission(this)) {
+                    PhotoUtil.openAlbum(this);
+                }
                 break;
             case R.id.signup_submit_btn:
                 submit();
@@ -205,6 +207,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     });
                     try {
                         if(future.get()){
+                            Shared.saveString(RegisterActivity.this,"account",nickname);
                             Intent intent = new Intent();
                             intent.putExtra("register", memberInfo);
                             setResult(RESULT_OK, intent);
@@ -218,24 +221,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                if (!conn.isClosed()) {
-//                                    isSuccesful = dbDao.insertMemberInfoData(memberInfo);
-//
-//                                } else {
-//                                    DbConnection.getConnection();
-//                                    isSuccesful = dbDao.insertMemberInfoData(memberInfo);
-//                                }
-//                                setResult(RESULT_OK, intent);
-//                                finish();
-//                            } catch (SQLException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }).start();
                 }
 
                 @Override
