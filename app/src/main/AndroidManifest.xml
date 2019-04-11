@@ -16,12 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".login.LoginActivity"></activity>
+        <activity android:name=".my.upload.UpLodadArtsActivity"></activity>
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".register.RegisterActivity" />
-        <activity android:name=".home.ContentActivity"></activity>
+        <activity android:name=".home.ContentActivity" />
         <activity android:name=".my.item1.MyItem1Activity" />
         <activity android:name=".my.follow.MyFollowActivity" />
-        <activity android:name=".home.Leibie_Activity"/>
+        <activity android:name=".home.Leibie_Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

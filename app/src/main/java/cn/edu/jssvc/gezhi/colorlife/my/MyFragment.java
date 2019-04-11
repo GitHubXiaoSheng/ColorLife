@@ -1,5 +1,6 @@
 package cn.edu.jssvc.gezhi.colorlife.my;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+
 
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
@@ -122,8 +123,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.fragmy_item4_layout:
                 break;
-            case R.id.fragmy_item5_layout://上传作品
-
+            case R.id.fragmy_item5_layout:
                 break;
             case R.id.fragmy_item6_layout:
                 break;
@@ -141,9 +141,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             if(data != null){
                 memberInfo = (MemberInfo)data.getSerializableExtra("memberInfo");
                 if(memberInfo != null){
-                    Glide.with(this).load(memberInfo.getPhotoUrl()).into(headImg);
-                    nameTv.setText(memberInfo.getNickName());
-                    gradeTv.setText("Lv." + memberInfo.getLevel());
+
                 }
             }
         }

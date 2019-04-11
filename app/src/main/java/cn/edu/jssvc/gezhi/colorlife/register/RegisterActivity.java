@@ -116,6 +116,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 submit();
                 break;
             case R.id.singup_cancel_btn:
+
+                   finish();
+
             case R.id.register_back_img:
                 finish();
                 break;
