@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     Message message = new Message();
                     message.what = 1;
                     handler2.sendMessage(message);

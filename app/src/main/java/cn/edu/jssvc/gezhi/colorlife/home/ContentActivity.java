@@ -1,5 +1,6 @@
 package cn.edu.jssvc.gezhi.colorlife.home;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +8,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class ContentActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,11 +31,32 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
     private Button button_gouwuche,          //购物车
                         button_lijigoumai;    //立即购买
 
+    private int id;
+    private List<Arts_info> arts_info = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        arts_info = MyApplication.mArtsInfoList;
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id",1);
         setContentView(R.layout.activity_content);
         init();
+
+        for (Arts_info arts_info1 : arts_info) {
+            if (arts_info1.getArt_id() == id){
+                Glide.with(this)
+                        .load(arts_info1.getUrl())
+                        .transition(withCrossFade())
+                        .into(imageView_src);
+
+                textView_money.setText(arts_info1.getPrice()+"");
+                textView_time.setText("发布日期：" + arts_info1.getRelease_date());
+                textView_title.setText(arts_info1.getMaptilte());
+                textView_content.setText(arts_info1.getContent());
+
+            }
+        }
     }
 
     private void init() {
@@ -47,6 +77,9 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
         button_lijigoumai = findViewById(R.id.contentactivity_goumai);
         button_lijigoumai.setOnClickListener(this);
     }
+
+
+
 
     @Override
     public void onClick(View v) {

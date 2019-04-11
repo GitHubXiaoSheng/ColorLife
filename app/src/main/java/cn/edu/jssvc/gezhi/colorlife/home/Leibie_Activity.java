@@ -35,6 +35,7 @@ public class Leibie_Activity extends AppCompatActivity {
     private ItemAdapter itemAdapter;
 
     private List<Arts_info> arts_info = new ArrayList<>();
+    private List<Integer> idList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 1){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -88,6 +90,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 2){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -97,6 +100,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 3){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -106,6 +110,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 4){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -115,6 +120,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 5){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -124,6 +130,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 6){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -133,6 +140,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 7){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -142,6 +150,7 @@ public class Leibie_Activity extends AppCompatActivity {
                 if (arts_info1.getClassify_id() == 8){
                     item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
@@ -165,7 +174,7 @@ public class Leibie_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Leibie_Activity.this, ContentActivity.class);
-                intent.putExtra("id", "");
+                intent.putExtra("id", idList.get(position));
                 startActivity(intent);
             }
         });

@@ -37,6 +37,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Glide.with(mContext)
                 .load(item.getImage())
+                .thumbnail(0.2f)
                 .transition(withCrossFade())
                 .into(imageView);
 
