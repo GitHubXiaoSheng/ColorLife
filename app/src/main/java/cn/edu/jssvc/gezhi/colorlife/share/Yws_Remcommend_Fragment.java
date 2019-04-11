@@ -60,9 +60,9 @@ public class Yws_Remcommend_Fragment extends Fragment {
 
     void showlist() {
         for (int i = 0; i < 8; i++) {
-            Yws_Recommend yws_recommend1 = new Yws_Recommend("很久以后87", "37分钟前", "今天还成为很多游客手机里面的一道风景线", "220", "5", "7", R.drawable.head3, R.drawable.commend12, R.drawable.commend20, R.drawable.commend10, R.drawable.commend4, R.drawable.commend13, R.drawable.commend3, R.drawable.commend10, R.drawable.commend20, R.drawable.commend12);
+            Yws_Recommend yws_recommend1 = new Yws_Recommend("很久以后87", "37分钟前", "今天还成为很多游客手机里面的一道风景线", "220", "5", "7", R.drawable.head3, R.drawable.follow1, R.drawable.follow2, R.drawable.follow4, R.drawable.follow8, R.drawable.follow5, R.drawable.follow6jpg);
             myremmondlist.add(yws_recommend1);
-            Yws_Recommend yws_recommend2 = new Yws_Recommend("爱zzz的胖琪", "1小时前", "今天还成为很多游客手机里面的一道风景线", "50", "45", "60", R.drawable.head4, R.drawable.commend1, R.drawable.commend3, R.drawable.commend3, R.drawable.commend20, R.drawable.commend13, R.drawable.commend8, R.drawable.commend18, R.drawable.commend3, R.drawable.commend13);
+            Yws_Recommend yws_recommend2 = new Yws_Recommend("爱zzz的胖琪", "1小时前", "今天还成为很多游客手机里面的一道风景线", "50", "45", "60", R.drawable.head4, R.drawable.follow1, R.drawable.follow3, R.drawable.follow4, R.drawable.follow8, R.drawable.follow5, R.drawable.follow4);
             myremmondlist.add(yws_recommend2);
         }
     }

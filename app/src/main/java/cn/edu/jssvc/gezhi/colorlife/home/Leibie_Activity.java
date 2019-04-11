@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.jssvc.gezhi.colorlife.R;
+import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
 
 public class Leibie_Activity extends AppCompatActivity {
 
@@ -25,11 +26,17 @@ public class Leibie_Activity extends AppCompatActivity {
     private Item item;
     private List<Item> itemList = new ArrayList<>();
     private ItemAdapter itemAdapter;
+    private DbDao dbDao;
+    private List<Arts_info> arts_info = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leibie);
+
+        dbDao = new DbDao();
+        arts_info = dbDao.queryArtsinfo();
+
         Intent intent = getIntent();
         jieshouData = Integer.valueOf(intent.getStringExtra("lei"));
         init();
@@ -39,10 +46,12 @@ public class Leibie_Activity extends AppCompatActivity {
     private void addData() {
         if (jieshouData == 1) {
             textView_title.setText("速写");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic41.nipic.com/20140429/12728082_192158998000_2.jpg", "这是第" + i + "个速写画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (int i = 0; i <= arts_info.size(); i++) {
+                if (Integer.valueOf(arts_info.get(i).getClassify_id()) == 1){
+                    item = new Item(arts_info.get(i).getUrl(), arts_info.get(i).getMaptilte(), arts_info.get(i).getTags(), arts_info.get(i).getRelease_date());
+                    itemList.add(item);
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 2) {
             textView_title.setText("素描");
