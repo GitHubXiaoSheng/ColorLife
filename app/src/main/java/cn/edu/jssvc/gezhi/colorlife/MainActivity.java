@@ -4,7 +4,16 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.edu.jssvc.gezhi.colorlife.db.DbConnection;
+import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
+import cn.edu.jssvc.gezhi.colorlife.home.Arts_info;
 import cn.edu.jssvc.gezhi.colorlife.home.HomeFragment;
 import cn.edu.jssvc.gezhi.colorlife.my.MyFragment;
 import cn.edu.jssvc.gezhi.colorlife.search.SearchFragment;
@@ -18,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static int MainEntry = R.id.main_navigation_2;
     public static int MainShare = R.id.main_navigation_3;
     public static int MainMy = R.id.main_navigation_4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DbDao dbDao = new DbDao();
     }
 
     private void replaceFragment(int index){
