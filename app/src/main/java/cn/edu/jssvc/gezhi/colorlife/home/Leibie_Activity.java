@@ -72,6 +72,7 @@ public class Leibie_Activity extends AppCompatActivity {
     };
 
     private void addData() {
+        itemList.clear();
         if (jieshouData == 1) {
             textView_title.setText("速写");
             for (Arts_info arts_info1 : arts_info) {
