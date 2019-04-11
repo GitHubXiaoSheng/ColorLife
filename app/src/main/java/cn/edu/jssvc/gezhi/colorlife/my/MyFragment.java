@@ -124,6 +124,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             case R.id.fragmy_item4_layout:
                 break;
             case R.id.fragmy_item5_layout:
+
                 break;
             case R.id.fragmy_item6_layout:
                 break;
