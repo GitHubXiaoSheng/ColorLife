@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        index = getIntent().getIntExtra("BackToMainAction", R.id.main_navigation_1);
         initView();
-        replaceFragment(index);
     }
 
     private void initView(){
@@ -52,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         DbDao dbDao = new DbDao();
+        index = getIntent().getIntExtra("BackToMainAction", R.id.main_navigation_1);
+        replaceFragment(index);
     }
 
     private void replaceFragment(int index){
