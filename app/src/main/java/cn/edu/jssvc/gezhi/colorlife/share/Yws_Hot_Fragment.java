@@ -48,7 +48,6 @@ public class Yws_Hot_Fragment extends Fragment {
         if(isVisible()){
             init();
         }
-
     }
     void  init(){
         tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);

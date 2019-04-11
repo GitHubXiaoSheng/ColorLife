@@ -12,18 +12,27 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -57,6 +66,56 @@ public class PhotoUtil {
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
+
+//    public static void loadPhoto(Context context,String photoUrl){
+//        try {
+//            Bitmap bitmap = Glide.with(context).asBitmap()
+//                    .load(photoUrl).into(100,100).get();
+//            savePicture(context,bitmap,"");
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public static void savePicture(Context context ,Bitmap bm, String fileName) {
+//        Log.i("xing", "savePicture: ------------------------");
+//        if (null == bm) {
+//            Log.i("xing", "savePicture: ------------------图片为空------");
+//            return;
+//        }
+//        //建立指定文件夹
+//        File foder = new File(Environment.getExternalStorageDirectory() , "zzp_sale");
+//        if (!foder.exists()) {
+//            foder.mkdirs();
+//        }
+//        File myCaptureFile = new File(foder, fileName);
+//        try {
+//            if (!myCaptureFile.exists()) {
+//                myCaptureFile.createNewFile();
+//            }
+//            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+//            //压缩保存到本地
+//            bm.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+//            bos.flush();
+//            bos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        // 把文件插入到系统图库
+//        try {
+//            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+//                    myCaptureFile.getAbsolutePath(), fileName, null);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        // 最后通知图库更新
+//        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + myCaptureFile.getPath())));
+//
+//        Toast.makeText(context, "保存成功!", Toast.LENGTH_SHORT).show();
+//
+//    }
 
     //方法一：下载web服务器图片
     public void getPictureByHttpURLConnection(String url) {
@@ -138,7 +197,6 @@ public class PhotoUtil {
      * @return 缩放后的图片
      */
     private Bitmap scaleZip(Bitmap bitmap) {
-
         Matrix matrix = new Matrix();
         matrix.setScale( 0.3f, 0.3f );
         bitmap = Bitmap.createBitmap( bitmap, 0, 0, bitmap.getWidth(),
@@ -150,7 +208,7 @@ public class PhotoUtil {
 
 
     /**
-     * 当api>=19,用此方法获取图片
+     * 当api>=19,用此方法获取本地图片
      * @param activity  活动
      * @param data 返回的数据
      * @return 返回本地的图片路径
@@ -199,7 +257,7 @@ public class PhotoUtil {
     }
 
     /**
-     * 当api<19,用此方法获取图片
+     * 当api<19,用此方法获取本地图片
      * @param activity  活动
      * @param data 返回的数据
      * @return 返回本地的图片路径

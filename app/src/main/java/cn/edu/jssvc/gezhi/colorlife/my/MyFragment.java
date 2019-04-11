@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+
 
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
@@ -141,9 +141,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             if(data != null){
                 memberInfo = (MemberInfo)data.getSerializableExtra("memberInfo");
                 if(memberInfo != null){
-                    Glide.with(this).load(memberInfo.getPhotoUrl()).into(headImg);
-                    nameTv.setText(memberInfo.getNickName());
-                    gradeTv.setText("Lv." + memberInfo.getLevel());
+
                 }
             }
         }
