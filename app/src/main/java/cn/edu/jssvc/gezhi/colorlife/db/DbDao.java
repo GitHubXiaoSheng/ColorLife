@@ -350,7 +350,7 @@ public class DbDao {
                 comment = new Comment();
                 comment.setId( resultSet.getInt( "id" ) );
                 comment.setArtId( resultSet.getInt( "art_id" ) );
-                comment.setHead( resultSet.getString( "head" ) );
+//                comment.setHead( resultSet.getString( "head" ) );
                 comment.setComment( resultSet.getString( "comment" ) );
                 comment.setNickName( resultSet.getString( "nick_name" ) );
                 comment.setDate( resultSet.getString( "date" ) );
