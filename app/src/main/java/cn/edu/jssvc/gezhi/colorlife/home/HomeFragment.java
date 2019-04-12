@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private List<Tuijian> tuijianList = new ArrayList<>();
     private TuijianAdapter tuijianAdapter;
 
+    private List<Arts_info> arts_info = new ArrayList<>();
+
     private CircleImageView imageView_fenlei_1,imageView_fenlei_2,imageView_fenlei_3,imageView_fenlei_4,imageView_fenlei_5,imageView_fenlei_6,imageView_fenlei_7,imageView_fenlei_8;
 
     @Override
@@ -57,8 +60,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        arts_info = MyApplication.mArtsInfoList;
         init();
-
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -69,7 +72,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         },0,3000);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                    Message message = new Message();
+                    message.what = 1;
+                    handler2.sendMessage(message);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
+
+    @SuppressLint("HandlerLeak")
+    Handler handler2 = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                addListViewData();
+            }
+        }
+    };
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
@@ -127,8 +154,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         viewPager.setCurrentItem(0);
         textView_title.setText(titleString[0]);
 
-        addListViewData();
-
         imageView_fenlei_1 = getActivity().findViewById(R.id.image_fenlei_1);
         imageView_fenlei_2 = getActivity().findViewById(R.id.image_fenlei_2);
         imageView_fenlei_3 = getActivity().findViewById(R.id.image_fenlei_3);
@@ -149,11 +174,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void addListViewData() {
-        for (int i = 1; i <= 10; i++) {
-            tuijian = new Tuijian("http://img4.imgtn.bdimg.com/it/u=3146195644,3582029842&fm=26&gp=0.jpg", "这是第" + i + "幅画", "12" + i + "3人观看", "6" + i + "6人收藏");
+        for (Arts_info arts_info1 : arts_info) {
+            tuijian = new Tuijian(arts_info1.getUrl(), arts_info1.getMaptilte(), "", "");
             tuijianList.add(tuijian);
+            tuijianAdapter.notifyDataSetChanged();
         }
-        tuijianAdapter.notifyDataSetChanged();
     }
 
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {

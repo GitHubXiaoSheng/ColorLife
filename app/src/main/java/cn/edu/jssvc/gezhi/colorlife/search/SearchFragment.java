@@ -31,28 +31,37 @@ private View view;
     private ArrayList<Fragment> fragmentList;
     private List<String> list_Title;
     private String mNames[] = {
-            "welcome","android","TextView",
-            "apple","jamy","kobe bryant",
-            "jordan","layout","viewgroup",
-            "margin","padding","text",
-            "name","type"
+            "水彩画细节","如何提高画画技术","中西结合的作品",
+            "作品评估","家庭壁画","油画",
+            "世界名画","画展","印象派",
+
     };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_search, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         mSearchView = (SearchView)view.findViewById(R.id.edit_search);
         zkbtn = (Button)view.findViewById(R.id.zhankai);
         tablayout = (TabLayout)view.findViewById(R.id.tablayout);
         viewpager = (ViewPager)view.findViewById(R.id.viewpage);
         mSearchView.setFocusable(false);
         mSearchView.clearFocus();
+        replacefragment(new PaihangFragment());
+        replacefragment(new HuaTiBangFragment());
         initChildView();
         initSearch();
         initView();
-        return view;
-
+    }
+    void replacefragment(Fragment fragment){
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpage,fragment).commit();
     }
     private void initSearch(){
         if (mSearchView==null){
@@ -94,12 +103,11 @@ private View view;
     private  void initView(){
         fragmentList = new ArrayList<>();
         list_Title = new ArrayList<>();
-        fragmentList.add(new ReMenFragment());
+
+        fragmentList.add(new PaihangFragment());
         fragmentList.add(new HuaTiBangFragment());
-        fragmentList.add(new SheQuFragment());
-        list_Title.add("热门话题");
-        list_Title.add("话题榜");
-        list_Title.add("社区");
+        list_Title.add("原创排行榜");
+        list_Title.add("今日话题");
         viewpager.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager(),getActivity(),fragmentList,list_Title));
         tablayout.setupWithViewPager(viewpager);
     }

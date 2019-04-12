@@ -24,7 +24,9 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
 import cn.edu.jssvc.gezhi.colorlife.bean.Comment;
+import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
+import cn.edu.jssvc.gezhi.colorlife.home.Arts_info;
 
 /**
  * Created by Administrator on 2018/12/9.
@@ -44,6 +46,15 @@ public class DbDao {
     ScheduledExecutorService scheduledExecutorService;
 
     public static List<MemberInfo> mMemberInfoList=new ArrayList<>(  );
+    public static List<Arts_info> mArtsInfoList=new ArrayList<>(  );
+
+    public static List<Arts_info> getmArtsInfoList() {
+        return mArtsInfoList;
+    }
+
+    public static void setmArtsInfoList(List<Arts_info> mArtsInfoList) {
+        DbDao.mArtsInfoList = mArtsInfoList;
+    }
 
     public static List<MemberInfo> getmMemberInfoList() {
         return mMemberInfoList;
@@ -54,8 +65,9 @@ public class DbDao {
     }
 
     public DbDao() {
+
         //定义存放4个线程的线程池
-        scheduledExecutorService = Executors.newScheduledThreadPool( 4 );
+//        scheduledExecutorService = Executors.newScheduledThreadPool( 4 );
         new Thread( new Runnable() {
             @Override
             public void run() {
@@ -91,12 +103,48 @@ public class DbDao {
     }
 
     /**
+     * 查询arts_info表，将所有数据存到列表里面
+     * @return
+     */
+    public List<Arts_info> queryArtsinfo() {    //查询方法，返回List
+        List<Arts_info> arts_infoList = new ArrayList<>();
+        String sql = "select * from arts_info";
+        Log.d( "tag-querinfo11", sql);
+        Arts_info arts_info;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement(sql);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                arts_info = new Arts_info();
+                arts_info.setArt_id(resultSet.getInt("art_id"));
+                arts_info.setUrl(resultSet.getString("url"));
+                arts_info.setCreate_date(resultSet.getString("create_date"));
+                arts_info.setRelease_date(resultSet.getString("release_date"));
+                arts_info.setPrice(resultSet.getFloat("price"));
+                arts_info.setTags(resultSet.getString("tags")+"");
+                arts_info.setAuthor_id(resultSet.getInt("author_id"));
+                arts_info.setClassify_id(resultSet.getInt("classify_id"));
+                arts_info.setTheme_id(resultSet.getInt("theme_id"));
+                arts_info.setContent(resultSet.getString("content"));
+                arts_info.setMaptilte(resultSet.getString("map_title"));
+
+                arts_infoList.add(arts_info);
+                Log.d( "tag-query-----arts_info", arts_info.toString() );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            dbConnection.closeConn();
+        }
+        return arts_infoList;
+    }
+
+    /**
      * 查询member_info表，将所有数据存到列表里面
      * @return
      */
     public List<MemberInfo> queryMemberInfo() {//查询方法，返回List
         List<MemberInfo> memberInfoList = new ArrayList<>();
-
         String sql = "select * from member_info";
         MemberInfo memberInfo;
         try {
@@ -120,8 +168,6 @@ public class DbDao {
                 memberInfo.setLevel( resultSet.getInt( "level" ) );
 
 //                memberInfo.setQQ(resultSet.getString( 5 ));
-
-
                 memberInfoList.add( memberInfo );
                 Log.d( "tag-querymemberinfo", memberInfo.toString() );
             }
