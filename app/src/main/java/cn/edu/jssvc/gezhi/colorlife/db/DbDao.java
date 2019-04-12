@@ -156,7 +156,6 @@ public class DbDao {
                 memberInfo = new MemberInfo();
                 memberInfo.setId( resultSet.getInt( "member_id" ) );
                 memberInfo.setNickName( resultSet.getString( "nick_name" ) );
-//                memberInfo.setRealName( resultSet.getString( 3 ) );
                 memberInfo.setPhotoUrl( resultSet.getString( "head_photo" ) );
                 memberInfo.setPassword( resultSet.getString( "password" ) );
                 memberInfo.setRegisterDate( resultSet.getString( "register_date" ) );
@@ -314,16 +313,16 @@ public class DbDao {
     }
 
     public boolean insertCommentData(Comment comment){
-        String sql = "insert into arts_info(art_id,nick_name,comment,date)values(?,?,?,?)";
+        String sql = "insert into arts_info(art_id,nick_name,comment,date,head_photo)values(?,?,?,?,?)";
         try {
 //            ps = (PreparedStatement) conn.prepareStatement(sql);
             if (conn!=null){
                 ps=  (PreparedStatement)conn.prepareStatement(sql);
-//                ps.setInt(1,memberInfo.getMemberId());
                 ps.setInt(1,comment.getArtId());
                 ps.setString(2,comment.getNickName());
                 ps.setString(3,comment.getComment());
                 ps.setString(4,comment.getDate());
+                ps.setString(5,comment.getHead());
                 Log.d(TAG, "insertArtInfoData: 执行了插入评论");
                 return ps.execute();
             }
@@ -346,21 +345,21 @@ public class DbDao {
         try {
             ps = (PreparedStatement) conn.prepareStatement( sql2 );
             resultSet = ps.executeQuery();
-            if (resultSet==null)
             while (resultSet.next()) {
                 comment = new Comment();
                 comment.setId( resultSet.getInt( "id" ) );
                 comment.setArtId( resultSet.getInt( "art_id" ) );
+                comment.setHead( resultSet.getString( "head_photo" ) );
                 comment.setComment( resultSet.getString( "comment" ) );
                 comment.setNickName( resultSet.getString( "nick_name" ) );
-                comment.setNickName( resultSet.getString( "date" ) );
+                comment.setDate( resultSet.getString( "date" ) );
                 commentList.add( comment );
                 Log.d( "tag-querycommentinfo", comment.toString() );
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-//            dbConnection.closeConn();
+            dbConnection.closeConn();
         }
         return commentList;
     }

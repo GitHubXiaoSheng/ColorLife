@@ -1,6 +1,6 @@
 package cn.edu.jssvc.gezhi.colorlife.bean;
 
-public class ArtsInfo {
+public class ArtsInfo2 {
     private int artId;
     private int themeId;
     private String url;

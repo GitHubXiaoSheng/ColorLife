@@ -3,19 +3,34 @@ package cn.edu.jssvc.gezhi.colorlife.home;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
+import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
+import cn.edu.jssvc.gezhi.colorlife.bean.Comment;
+import cn.edu.jssvc.gezhi.colorlife.db.DbConnection;
+import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
+import cn.edu.jssvc.gezhi.colorlife.my.item2.MyItem2Activity;
+import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -40,9 +55,10 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
     private List<Pinglun> pinglunList = new ArrayList<>();
     private PinglunAdapter pinglunAdapter;
 
-
     private int id;
     private List<Arts_info> arts_info = new ArrayList<>();
+
+    private DbDao dbDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
         arts_info = MyApplication.mArtsInfoList;
         Intent intent = getIntent();
         id = intent.getIntExtra("id",1);
+        Log.d("作品id", id + "");
         init();
 
         for (Arts_info arts_info1 : arts_info) {
@@ -64,7 +81,6 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 textView_time.setText("发布日期：" + arts_info1.getRelease_date());
                 textView_title.setText(arts_info1.getMaptilte());
                 textView_content.setText(arts_info1.getContent());
-
             }
         }
         addPinglun();
@@ -88,6 +104,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
 //        button_lijigoumai = findViewById(R.id.contentactivity_goumai);
 //        button_lijigoumai.setOnClickListener(this);
         editText_pl = findViewById(R.id.editText_pl);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         button_fs = findViewById(R.id.button_fasong);
         button_fs.setOnClickListener(this);
         myListView = findViewById(R.id.content_listView);
@@ -96,15 +113,36 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void addPinglun() {
-        for (int i = 0; i < 5; i++) {
-            pinglun = new Pinglun();
-            pinglun.setTilteImg("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1555033811&di=647ed99974583c27fb348dfaef04d16c&src=http://hbimg.b0.upaiyun.com/00bc8151242c7d2460d0b7d4b913c6ed97f957cc158f9-SXd0Yk_fw658");
-            pinglun.setNameText("名字");
-            pinglun.setTimeText("10:39");
-            pinglun.setContentText("我评论了");
-            pinglunList.add(pinglun);
-            pinglunAdapter.notifyDataSetChanged();
+        dbDao = new DbDao();
+        //查询到相关艺术的评论
+        Future<List<Comment>> future = MyApplication.executorService.submit(new Callable<List<Comment>>() {
+            @Override
+            public List<Comment> call() throws Exception {
+                Connection conn = DbConnection.getConnection();
+                if (conn == null) {
+                    conn = DbConnection.getConnection();
+                }
+                Log.d("我看看", "运行了这里.id="+id);
+                return dbDao.queryAllCommentInfo(id);
+            }
+        });
+        try {
+            for (Comment comment : future.get()) {
+                Log.d("我看看", "运行了这里2222");
+                pinglun = new Pinglun();
+                pinglun.setTilteImg(comment.getHead());
+                pinglun.setNameText(comment.getNickName());
+                pinglun.setTimeText(comment.getDate());
+                pinglun.setContentText(comment.getComment());
+                pinglunList.add(pinglun);
+                pinglunAdapter.notifyDataSetChanged();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 
 
@@ -116,7 +154,41 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
 //            case R.id.contentactivity_goumai:
 //                break;
             case R.id.button_fasong:
-
+                int dangqianId = id;
+                String headImage = Shared.getString(ContentActivity.this, "accountPhoto", "");
+                String name = Shared.getString(ContentActivity.this, "account", "");
+                String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                String pinglun = editText_pl.getText().toString();
+                if (name.isEmpty()) {
+                    final Comment comment = new Comment();
+                    comment.setArtId(dangqianId);
+                    comment.setHead(headImage);
+                    comment.setNickName(name);
+                    comment.setDate(time);
+                    comment.setComment(pinglun);
+                    Future<Boolean> future = MyApplication.executorService.submit(new Callable<Boolean>() {
+                        @Override
+                        public Boolean call() throws Exception {
+                            return dbDao.insertCommentData(comment);
+                        }
+                    });
+                    try {
+                        if (future.get()) {
+                            Toast.makeText(ContentActivity.this,"评论成功！",Toast.LENGTH_SHORT).show();
+                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        }else {
+                            Toast.makeText(ContentActivity.this,"评论失败！",Toast.LENGTH_SHORT).show();
+                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        }
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    Toast.makeText(ContentActivity.this,"您还未登陆！",Toast.LENGTH_SHORT).show();
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                }
                 break;
             default:
                 break;
