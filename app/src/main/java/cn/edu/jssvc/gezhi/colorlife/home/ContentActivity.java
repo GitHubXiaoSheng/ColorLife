@@ -118,7 +118,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
         try {
             for (Comment comment : future.get()) {
                 pinglun = new Pinglun();
-                pinglun.setTilteImg(comment.getTitleImage());
+                pinglun.setTilteImg(comment.getHead());
                 pinglun.setNameText(comment.getNickName());
                 pinglun.setTimeText(comment.getDate());
                 pinglun.setContentText(comment.getComment());

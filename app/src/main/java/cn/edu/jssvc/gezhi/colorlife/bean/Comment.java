@@ -3,17 +3,17 @@ package cn.edu.jssvc.gezhi.colorlife.bean;
 public class Comment {
     private int id;
     private int artId;
-    private String titleImage;
+    private String head;
     private String nickName;
     private String comment;
     private String date;
 
-    public String getTitleImage() {
-        return titleImage;
+    public String getHead() {
+        return head;
     }
 
-    public void setTitleImage(String titleImage) {
-        this.titleImage = titleImage;
+    public void setHead(String head) {
+        this.head = head;
     }
 
     public int getId() {
