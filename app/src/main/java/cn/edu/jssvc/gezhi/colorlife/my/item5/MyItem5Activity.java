@@ -1,5 +1,6 @@
 package cn.edu.jssvc.gezhi.colorlife.my.item5;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -65,6 +66,8 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
     private DbDao dbDao;
     private Connection conn;
     private ArtInfo artInfo;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +136,10 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, "你还没有登录哦！", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(imagePath)) {
+            Toast.makeText(this, "你还没有选择上传的照片！", Toast.LENGTH_SHORT).show();
+            return;
+        }
         imgFileName = setFileName(account);
         artInfo = new ArtInfo();
         artInfo.setContent(content);
@@ -144,6 +151,12 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
         artInfo.setCreateData(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
         conn = dbDao.getConn();
 //        for (int i=0;i<imgPathList.size();i++){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("正在上传...");
+        progressDialog.setMessage("上传中...");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
             try {
                 WebApi.getInstance().uploadImage(imagePath, WebApi.TAG_ART, iisUrl, imgFileName, new WebListener() {
                     @Override
@@ -158,8 +171,13 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
                         try {
                             if(future.get()){
                                 conn.close();
-                                finish();
                                 Log.d(TAG, "onSuccess: 上传成功！");
+                                progressDialog.dismiss();
+                                Toast.makeText(MyItem5Activity.this,"上传成功！",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else {
+                                progressDialog.dismiss();
+                                Toast.makeText(MyItem5Activity.this,"上传失败！",Toast.LENGTH_SHORT).show();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -169,6 +187,8 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
                     }
                     @Override
                     public void onFailure() {
+                        progressDialog.dismiss();
+                        Toast.makeText(MyItem5Activity.this,"上传失败！",Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (IOException e) {
