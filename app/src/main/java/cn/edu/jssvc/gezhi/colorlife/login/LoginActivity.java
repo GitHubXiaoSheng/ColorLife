@@ -28,6 +28,7 @@ import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
 import cn.edu.jssvc.gezhi.colorlife.photo.PhotoUtil;
 import cn.edu.jssvc.gezhi.colorlife.register.RegisterActivity;
+import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -114,6 +115,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (loginProving(account, password)) {
                 try {
                     conn.close();
+                    Shared.saveInt(LoginActivity.this,"accountId",memberInfo.getId());
+                    Shared.saveInt(LoginActivity.this,"accountlevel",memberInfo.getLevel());
+                    Shared.saveString(LoginActivity.this,"account",memberInfo.getNickName());
+                    Shared.saveString(LoginActivity.this,"accountPhoto",memberInfo.getPhotoUrl());
                     Intent intent = new Intent();
                     intent.putExtra("memberInfo", memberInfo);
                     setResult(RESULT_OK, intent);

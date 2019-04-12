@@ -38,6 +38,7 @@ public class TuijianAdapter extends ArrayAdapter<Tuijian> {
 
         Glide.with(mContext)
                 .load(tuijian.getImage())
+                .thumbnail(0.2f)
                 .transition(withCrossFade())
                 .into(imageView);
         textView_title.setText(tuijian.getTitle());

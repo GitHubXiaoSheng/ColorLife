@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".my.item1.MyItem1Activity">
+    tools:context=".my.item2.MyItem2Activity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center_vertical"
+        android:background="@color/home_title"
         >
         <ImageView
             android:id="@+id/myitem1_back_img"
@@ -17,14 +18,14 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/zl_back"/>
+            android:src="@drawable/zzj_back"/>
 
         <TextView
             android:id="@+id/myitem1_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/text_gray"
+            android:textColor="#fff"
             android:textSize="25sp"
             android:text="艺术圈"/>
 

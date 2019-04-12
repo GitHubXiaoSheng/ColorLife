@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="详情"
             android:gravity="center"
             android:textSize="17dp"
             android:textColor="#ffffff"/>
@@ -37,7 +38,9 @@
             <ImageView
                 android:id="@+id/contentactivity_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp">
@@ -72,7 +75,6 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:gravity="center|left"
-                android:text="dafeeee"
                 android:textSize="20dp"
                 android:textColor="#333333"/>
             <TextView
@@ -81,9 +83,12 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:gravity="center|left"
-                android:text="dafeeee"
                 android:textSize="15dp"
                 android:textColor="#666666"/>
+            <cn.edu.jssvc.gezhi.colorlife.home.MyListView
+                android:id="@+id/content_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </ScrollView>
     <TextView
@@ -95,20 +100,35 @@
         android:layout_height="50dp"
         android:gravity="right|center"
         android:paddingRight="5dp"
-        android:background="#B4CDCD">
+        android:background="#eeeeee">
+        <EditText
+            android:id="@+id/editText_pl"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/zzj_edit_background"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="5dp"/>
         <Button
-            android:id="@+id/contentactivity_gouwuche"
-            android:layout_width="100dp"
+            android:id="@+id/button_fasong"
+            android:layout_width="60dp"
             android:layout_height="40dp"
-            android:background="@drawable/zzj_content_gouwuche"
-            android:text="加入购物车"
-            android:textColor="#ffffff"/>
-        <Button
-            android:id="@+id/contentactivity_goumai"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:background="@drawable/zzj_content_lijigoumai"
-            android:text="立即购买"
-            android:textColor="#ffffff"/>
+            android:background="@drawable/zzj_button_yuan"
+            android:text="发送"/>
+        <!--<Button-->
+            <!--android:id="@+id/contentactivity_gouwuche"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/zzj_content_gouwuche"-->
+            <!--android:text="加入购物车"-->
+            <!--android:textColor="#ffffff"/>-->
+        <!--<Button-->
+            <!--android:id="@+id/contentactivity_goumai"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/zzj_content_lijigoumai"-->
+            <!--android:text="立即购买"-->
+            <!--android:textColor="#ffffff"/>-->
     </LinearLayout>
 </LinearLayout>

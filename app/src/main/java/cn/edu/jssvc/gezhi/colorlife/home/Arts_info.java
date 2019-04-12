@@ -2,26 +2,60 @@ package cn.edu.jssvc.gezhi.colorlife.home;
 
 public class Arts_info {
 
-    private String art_id,           //作品id
-                    url,              //链接
+    private int art_id,           //作品id
+            author_id,       //作者id
+            classify_id,     //作品分类id
+            theme_id;        //题材id
+
+    private Float price;            //价格
+
+    private String url,              //链接
                     create_date,     //创作日期
                     release_date,    //发布日期
-                    price,            //价格
                     tags,             //附加内容
-                    author_id,       //作者id
-                    classify_id,     //作品分类id
-                    theme_id,        //题材id
                     content,         //内容
-                    maptilte;         //内容
+                    maptilte;         //标题
 
     public Arts_info() {}            //空的构造方法
 
-    public String getArt_id() {
+    public int getArt_id() {
         return art_id;
     }
 
-    public void setArt_id(String art_id) {
+    public void setArt_id(int art_id) {
         this.art_id = art_id;
+    }
+
+    public int getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(int author_id) {
+        this.author_id = author_id;
+    }
+
+    public int getClassify_id() {
+        return classify_id;
+    }
+
+    public void setClassify_id(int classify_id) {
+        this.classify_id = classify_id;
+    }
+
+    public int getTheme_id() {
+        return theme_id;
+    }
+
+    public void setTheme_id(int theme_id) {
+        this.theme_id = theme_id;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     public String getUrl() {
@@ -48,44 +82,12 @@ public class Arts_info {
         this.release_date = release_date;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getTags() {
         return tags;
     }
 
     public void setTags(String tags) {
         this.tags = tags;
-    }
-
-    public String getAuthor_id() {
-        return author_id;
-    }
-
-    public void setAuthor_id(String author_id) {
-        this.author_id = author_id;
-    }
-
-    public String getClassify_id() {
-        return classify_id;
-    }
-
-    public void setClassify_id(String classify_id) {
-        this.classify_id = classify_id;
-    }
-
-    public String getTheme_id() {
-        return theme_id;
-    }
-
-    public void setTheme_id(String theme_id) {
-        this.theme_id = theme_id;
     }
 
     public String getContent() {

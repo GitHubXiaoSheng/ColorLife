@@ -1,17 +1,24 @@
 package cn.edu.jssvc.gezhi.colorlife.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.jssvc.gezhi.colorlife.MainActivity;
+import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
 
@@ -26,81 +33,126 @@ public class Leibie_Activity extends AppCompatActivity {
     private Item item;
     private List<Item> itemList = new ArrayList<>();
     private ItemAdapter itemAdapter;
-    private DbDao dbDao;
+
     private List<Arts_info> arts_info = new ArrayList<>();
+    private List<Integer> idList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leibie);
-
-        dbDao = new DbDao();
-        arts_info = dbDao.queryArtsinfo();
-
         Intent intent = getIntent();
         jieshouData = Integer.valueOf(intent.getStringExtra("lei"));
-        init();
-        addData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        arts_info = MyApplication.mArtsInfoList;
+        Log.d("长度", arts_info.size() + "");
+        init();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                addData();
+            }
+        }
+    };
+
     private void addData() {
+        itemList.clear();
         if (jieshouData == 1) {
             textView_title.setText("速写");
-            for (int i = 0; i <= arts_info.size(); i++) {
-                if (Integer.valueOf(arts_info.get(i).getClassify_id()) == 1){
-                    item = new Item(arts_info.get(i).getUrl(), arts_info.get(i).getMaptilte(), arts_info.get(i).getTags(), arts_info.get(i).getRelease_date());
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 1){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
                     itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
                     itemAdapter.notifyDataSetChanged();
                 }
             }
         } else if (jieshouData == 2) {
             textView_title.setText("素描");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic1.win4000.com/wallpaper/9/5450ae2fdef8a.jpg", "这是第" + i + "个素描画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 2){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 3) {
             textView_title.setText("水彩");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic69.nipic.com/file/20150608/9252150_134415115986_2.jpg", "这是第" + i + "个水彩画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 3){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 4) {
             textView_title.setText("水粉");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic37.nipic.com/20140110/17563091_221827492154_2.jpg", "这是第" + i + "个水粉画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 4){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 5) {
             textView_title.setText("油画");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic.58pic.com/58pic/13/16/45/68p58PICJZr_1024.png", "这是第" + i + "个油画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 5){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 6) {
             textView_title.setText("水墨");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic31.nipic.com/20130720/5793914_122325176000_2.jpg", "这是第" + i + "个水墨画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 6){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 7) {
             textView_title.setText("书法");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic.qiantucdn.com/58pic/11/01/09/17V58PICsEi.jpg", "这是第" + i + "个书法", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 7){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         } else if (jieshouData == 8) {
             textView_title.setText("马克笔");
-            for (int i = 0; i <= 10; i++) {
-                item = new Item("http://pic34.nipic.com/20131020/6704106_203943375000_2.jpg", "这是第" + i + "个马克笔画", "附加内容" + i, "2019-02-" + i);
-                itemList.add(item);
-                itemAdapter.notifyDataSetChanged();
+            for (Arts_info arts_info1 : arts_info) {
+                if (arts_info1.getClassify_id() == 8){
+                    item = new Item(arts_info1.getUrl(), arts_info1.getMaptilte(), arts_info1.getTags(),arts_info1.getRelease_date());
+                    itemList.add(item);
+                    idList.add(arts_info1.getArt_id());
+                    itemAdapter.notifyDataSetChanged();
+                }
             }
         }
     }
@@ -122,7 +174,7 @@ public class Leibie_Activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Leibie_Activity.this, ContentActivity.class);
-                intent.putExtra("id", "");
+                intent.putExtra("id", idList.get(position));
                 startActivity(intent);
             }
         });
