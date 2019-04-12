@@ -64,7 +64,6 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 textView_time.setText("发布日期：" + arts_info1.getRelease_date());
                 textView_title.setText(arts_info1.getMaptilte());
                 textView_content.setText(arts_info1.getContent());
-
             }
         }
         addPinglun();
