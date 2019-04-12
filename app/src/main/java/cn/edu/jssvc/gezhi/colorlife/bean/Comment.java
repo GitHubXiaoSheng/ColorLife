@@ -3,9 +3,18 @@ package cn.edu.jssvc.gezhi.colorlife.bean;
 public class Comment {
     private int id;
     private int artId;
+    private String titleImage;
     private String nickName;
     private String comment;
     private String date;
+
+    public String getTitleImage() {
+        return titleImage;
+    }
+
+    public void setTitleImage(String titleImage) {
+        this.titleImage = titleImage;
+    }
 
     public int getId() {
         return id;

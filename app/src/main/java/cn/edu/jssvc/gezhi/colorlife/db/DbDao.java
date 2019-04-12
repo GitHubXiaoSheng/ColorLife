@@ -350,9 +350,10 @@ public class DbDao {
                 comment = new Comment();
                 comment.setId( resultSet.getInt( "id" ) );
                 comment.setArtId( resultSet.getInt( "art_id" ) );
+                comment.setTitleImage( resultSet.getString( "titleImage" ) );
                 comment.setComment( resultSet.getString( "comment" ) );
                 comment.setNickName( resultSet.getString( "nick_name" ) );
-                comment.setNickName( resultSet.getString( "date" ) );
+                comment.setDate( resultSet.getString( "date" ) );
                 commentList.add( comment );
                 Log.d( "tag-querycommentinfo", comment.toString() );
             }

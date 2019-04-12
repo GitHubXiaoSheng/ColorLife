@@ -3,6 +3,7 @@ package cn.edu.jssvc.gezhi.colorlife.home;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
@@ -113,14 +115,20 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 return dbDao.queryAllCommentInfo(id);
             }
         });
-        for (int i = 0; i < 5; i++) {
-            pinglun = new Pinglun();
-            pinglun.setTilteImg("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1555033811&di=647ed99974583c27fb348dfaef04d16c&src=http://hbimg.b0.upaiyun.com/00bc8151242c7d2460d0b7d4b913c6ed97f957cc158f9-SXd0Yk_fw658");
-            pinglun.setNameText("名字");
-            pinglun.setTimeText("10:39");
-            pinglun.setContentText("我评论了");
-            pinglunList.add(pinglun);
-            pinglunAdapter.notifyDataSetChanged();
+        try {
+            for (Comment comment : future.get()) {
+                pinglun = new Pinglun();
+                pinglun.setTilteImg(comment.getTitleImage());
+                pinglun.setNameText(comment.getNickName());
+                pinglun.setTimeText(comment.getDate());
+                pinglun.setContentText(comment.getComment());
+                pinglunList.add(pinglun);
+                pinglunAdapter.notifyDataSetChanged();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
