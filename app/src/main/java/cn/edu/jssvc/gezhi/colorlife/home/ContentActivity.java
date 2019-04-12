@@ -53,6 +53,8 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
     private int id;
     private List<Arts_info> arts_info = new ArrayList<>();
 
+    private DbDao dbDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,16 +108,16 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void addPinglun() {
+        dbDao = new DbDao();
         //查询到相关艺术的评论
         Future<List<Comment>> future = MyApplication.executorService.submit(new Callable<List<Comment>>() {
             @Override
             public List<Comment> call() throws Exception {
-                DbDao dbDao = new DbDao();
-                Connection conn = dbDao.getConn();
+                Connection conn = DbConnection.getConnection();
                 if (conn == null) {
                     conn = DbConnection.getConnection();
                 }
-                Log.d("我看看", "运行了这里1111");
+                Log.d("我看看", "运行了这里.id="+id);
                 return dbDao.queryAllCommentInfo(id);
             }
         });
