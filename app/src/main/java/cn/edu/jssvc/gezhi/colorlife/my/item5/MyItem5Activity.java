@@ -203,9 +203,6 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//        }
-
-
     }
 
     @Override
