@@ -1,20 +1,39 @@
-package cn.edu.jssvc.gezhi.colorlife.my.item1;
+package cn.edu.jssvc.gezhi.colorlife.my.item2;
 
-public class Item1_Bean {
+public class Item2_Bean {
     private String headImgUrl;
     private String name;
+    private String content;
     private String contentmgUrl;
     private int share;
     private int comment;
     private int like;
+    private boolean isLike;
 
-    public Item1_Bean(String headImgUrl, String name, String contentmgUrl, int share, int comment, int like) {
+    public Item2_Bean(String headImgUrl, String name, String content, String contentmgUrl, int share, int comment, int like) {
         this.headImgUrl = headImgUrl;
         this.name = name;
+        this.content = content;
         this.contentmgUrl = contentmgUrl;
         this.share = share;
         this.comment = comment;
         this.like = like;
+    }
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getHeadImgUrl() {
@@ -67,7 +86,7 @@ public class Item1_Bean {
 
     @Override
     public String toString() {
-        return "Item1_Bean{" +
+        return "Item2_Bean{" +
                 "headImgUrl='" + headImgUrl + '\'' +
                 ", name='" + name + '\'' +
                 ", contentmgUrl='" + contentmgUrl + '\'' +

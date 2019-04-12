@@ -67,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Connection conn;
     private String iisUrl = "http://123.206.19.177:8006/api/appservice/asyupload";
     private String imgUrlPath = "http://123.206.19.177:8006/file/head";
-    private String sex = "未知";
     private String imgFileName;
+    private String sex = "未知";
     private MemberInfo memberInfo;
     private boolean isSuccesful = false;//上传是否成功
 
@@ -207,7 +207,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     });
                     try {
                         if(future.get()){
-                            Shared.saveString(RegisterActivity.this,"account",nickname);
                             Intent intent = new Intent();
                             intent.putExtra("register", memberInfo);
                             setResult(RESULT_OK, intent);
@@ -291,7 +290,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             return false;
         }
-
         return true;
     }
 
