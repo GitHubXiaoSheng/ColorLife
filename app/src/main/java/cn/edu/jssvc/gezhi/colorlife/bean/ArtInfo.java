@@ -1,17 +1,17 @@
 package cn.edu.jssvc.gezhi.colorlife.bean;
 
 public class ArtInfo {
-    private int id;
-    private int authorId;
-    private int themeId;
-    private int classifyId;
-    private String url;
-    private String createData;
-    private String releaseData;
-    private String mapTitle;
-    private String content;
-    private String tags;
-    private float price;
+    private int id;//自增长的id
+    private int authorId;//作者id
+    private int themeId;//艺术属性
+    private int classifyId;//艺术分类
+    private String url;//艺术品id
+    private String createData;//创作日期
+    private String releaseData;//下架日期
+    private String mapTitle;//标题
+    private String content;//内容
+    private String tags;//标记
+    private float price;//价格
 
     public int getId() {
         return id;

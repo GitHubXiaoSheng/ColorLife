@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
+import cn.edu.jssvc.gezhi.colorlife.bean.Collector;
 import cn.edu.jssvc.gezhi.colorlife.bean.Comment;
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
@@ -315,7 +316,6 @@ public class DbDao {
     public boolean insertCommentData(Comment comment){
         String sql = "insert into comment(art_id,nick_name,comment,date,head_photo)values(?,?,?,?,?)";
         try {
-//            ps = (PreparedStatement) conn.prepareStatement(sql);
             if (conn!=null){
                 Log.d("获取数据", comment.getArtId() + "；" + comment.getHead() + "；" + comment.getNickName() + "；" + comment.getDate() + "；" + comment.getComment());
                 ps=  (PreparedStatement)conn.prepareStatement(sql);
@@ -324,9 +324,8 @@ public class DbDao {
                 ps.setString(3,comment.getComment());
                 ps.setString(4,comment.getDate());
                 ps.setString(5,comment.getHead());
-                ps.execute();
                 Log.d(TAG, "insertArtInfoData: 执行了插入评论");
-                return true;
+                return ps.execute();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -357,6 +356,59 @@ public class DbDao {
                 comment.setDate( resultSet.getString( "date" ) );
                 commentList.add( comment );
                 Log.d( "tag-querycommentinfo", comment.toString() );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbConnection.closeConn();
+        }
+        return commentList;
+    }
+
+    public boolean insertCollector(Collector collector){
+        String sql = "insert into collector(member_id,arts_id,head_photo,arts_photo,collector_date)values(?,?,?,?,?)";
+        try {
+            if (conn!=null){
+                ps=  (PreparedStatement)conn.prepareStatement(sql);
+                ps.setInt(1,collector.getMemberId());
+                ps.setInt(2,collector.getArtsId());
+                ps.setString(3,collector.getHeadUrl());
+                ps.setString(4,collector.getArtUrl());
+                ps.setString(5,collector.getCollectorDate());
+//                ps.setString(6,collector.getMemberName());
+                Log.d(TAG, "insertArtInfoData: 执行了插入收藏");
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 查询collector表，将authorId创建的所有数据存到列表里面
+     * @return
+     */
+    public List<Collector> queryCollectorInfo(int memberId) {//查询方法，返回List
+        Log.d( "tag-querycollectioninfo","开始查询");
+        List<Collector> commentList = new ArrayList<>();
+        String sql = "select * from collector where member_id = \'"+memberId+"\'";
+        String sql2 = "select * from collector";
+        Collector collector;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                collector = new Collector();
+                collector.setId( resultSet.getInt( "id" ) );
+                collector.setMemberId( resultSet.getInt( "member_id" ) );
+//                collector.setMemberName(resultSet.getString("member_name"));
+                collector.setHeadUrl( resultSet.getString( "head_photo" ) );
+                collector.setArtsId( resultSet.getInt( "arts_id" ) );
+                collector.setArtUrl( resultSet.getString( "arts_photo" ) );
+                collector.setCollectorDate( resultSet.getString( "collector_date" ) );
+                commentList.add( collector );
+                Log.d( "tag-querycollectioninfo", collector.toString() );
             }
         } catch (SQLException e) {
             e.printStackTrace();
