@@ -313,18 +313,20 @@ public class DbDao {
     }
 
     public boolean insertCommentData(Comment comment){
-        String sql = "insert into arts_info(art_id,nick_name,comment,date,head_photo)values(?,?,?,?,?)";
+        String sql = "insert into comment(art_id,nick_name,comment,date,head_photo)values(?,?,?,?,?)";
         try {
 //            ps = (PreparedStatement) conn.prepareStatement(sql);
             if (conn!=null){
+                Log.d("获取数据", comment.getArtId() + "；" + comment.getHead() + "；" + comment.getNickName() + "；" + comment.getDate() + "；" + comment.getComment());
                 ps=  (PreparedStatement)conn.prepareStatement(sql);
                 ps.setInt(1,comment.getArtId());
                 ps.setString(2,comment.getNickName());
                 ps.setString(3,comment.getComment());
                 ps.setString(4,comment.getDate());
                 ps.setString(5,comment.getHead());
+                ps.execute();
                 Log.d(TAG, "insertArtInfoData: 执行了插入评论");
-                return ps.execute();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();

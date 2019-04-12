@@ -1,6 +1,9 @@
 package cn.edu.jssvc.gezhi.colorlife.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -60,6 +65,8 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
 
     private DbDao dbDao;
 
+    Timer timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +90,11 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 textView_content.setText(arts_info1.getContent());
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         addPinglun();
     }
 
@@ -157,9 +169,9 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 int dangqianId = id;
                 String headImage = Shared.getString(ContentActivity.this, "accountPhoto", "");
                 String name = Shared.getString(ContentActivity.this, "account", "");
-                String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(System.currentTimeMillis()));
                 String pinglun = editText_pl.getText().toString();
-                if (name.isEmpty()) {
+                if (!name.isEmpty()) {
                     final Comment comment = new Comment();
                     comment.setArtId(dangqianId);
                     comment.setHead(headImage);
@@ -175,10 +187,10 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                     try {
                         if (future.get()) {
                             Toast.makeText(ContentActivity.this,"评论成功！",Toast.LENGTH_SHORT).show();
-                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                            editText_pl.setText("");
+                            addPinglun();
                         }else {
                             Toast.makeText(ContentActivity.this,"评论失败！",Toast.LENGTH_SHORT).show();
-                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                         }
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -187,7 +199,6 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 }else {
                     Toast.makeText(ContentActivity.this,"您还未登陆！",Toast.LENGTH_SHORT).show();
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 }
                 break;
             default:
