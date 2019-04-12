@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -22,9 +25,12 @@ import java.util.concurrent.Future;
 
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
+import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
 import cn.edu.jssvc.gezhi.colorlife.bean.Comment;
 import cn.edu.jssvc.gezhi.colorlife.db.DbConnection;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
+import cn.edu.jssvc.gezhi.colorlife.my.item2.MyItem2Activity;
+import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -48,7 +54,6 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
     private Pinglun pinglun;
     private List<Pinglun> pinglunList = new ArrayList<>();
     private PinglunAdapter pinglunAdapter;
-
 
     private int id;
     private List<Arts_info> arts_info = new ArrayList<>();
@@ -149,7 +154,41 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
 //            case R.id.contentactivity_goumai:
 //                break;
             case R.id.button_fasong:
-
+                int dangqianId = id;
+                String headImage = Shared.getString(ContentActivity.this, "accountPhoto", "");
+                String name = Shared.getString(ContentActivity.this, "account", "");
+                String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
+                String pinglun = editText_pl.getText().toString();
+                if (name.isEmpty()) {
+                    final Comment comment = new Comment();
+                    comment.setArtId(dangqianId);
+                    comment.setHead(headImage);
+                    comment.setNickName(name);
+                    comment.setDate(time);
+                    comment.setComment(pinglun);
+                    Future<Boolean> future = MyApplication.executorService.submit(new Callable<Boolean>() {
+                        @Override
+                        public Boolean call() throws Exception {
+                            return dbDao.insertCommentData(comment);
+                        }
+                    });
+                    try {
+                        if (future.get()) {
+                            Toast.makeText(ContentActivity.this,"评论成功！",Toast.LENGTH_SHORT).show();
+                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        }else {
+                            Toast.makeText(ContentActivity.this,"评论失败！",Toast.LENGTH_SHORT).show();
+                            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        }
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    Toast.makeText(ContentActivity.this,"您还未登陆！",Toast.LENGTH_SHORT).show();
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                }
                 break;
             default:
                 break;
