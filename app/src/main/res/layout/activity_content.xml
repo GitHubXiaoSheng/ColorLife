@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="详情"
             android:gravity="center"
             android:textSize="17dp"
             android:textColor="#ffffff"/>
@@ -104,7 +105,10 @@
             android:id="@+id/editText_pl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/zzj_edit_background"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
         <Button
             android:id="@+id/button_fasong"
             android:layout_width="60dp"

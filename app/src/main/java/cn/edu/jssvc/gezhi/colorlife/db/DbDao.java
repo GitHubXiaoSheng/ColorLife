@@ -84,13 +84,15 @@ public class DbDao {
 
     class MyHandler extends Handler {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(final Message msg) {
             switch (msg.what) {
                 case DBCONNECTED:
                     new Thread( new Runnable() {
                         @Override
                         public void run() {
                             mMemberInfoList=queryMemberInfo();
+                            mArtsInfoList=queryArtsinfo();
+                            MyApplication.mArtsInfoList = mArtsInfoList;
                         }
                     } ).start();
                     break;
