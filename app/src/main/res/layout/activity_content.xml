@@ -108,7 +108,8 @@
             android:layout_weight="1"
             android:background="@drawable/zzj_edit_background"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="5dp"/>
         <Button
             android:id="@+id/button_fasong"
             android:layout_width="60dp"
