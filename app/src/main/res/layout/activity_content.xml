@@ -74,7 +74,6 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:gravity="center|left"
-                android:text="dafeeee"
                 android:textSize="20dp"
                 android:textColor="#333333"/>
             <TextView
@@ -83,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:gravity="center|left"
-                android:text="dafeeee"
                 android:textSize="15dp"
                 android:textColor="#666666"/>
             <cn.edu.jssvc.gezhi.colorlife.home.MyListView
@@ -109,8 +107,9 @@
             android:layout_weight="1"/>
         <Button
             android:id="@+id/button_fasong"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@drawable/zzj_button_yuan"
             android:text="发送"/>
         <!--<Button-->
             <!--android:id="@+id/contentactivity_gouwuche"-->
