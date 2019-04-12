@@ -344,13 +344,13 @@ public class DbDao {
         String sql2 = "select * from comment";
         Comment comment;
         try {
-            ps = (PreparedStatement) conn.prepareStatement( sql );
+            ps = (PreparedStatement) conn.prepareStatement( sql2 );
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 comment = new Comment();
                 comment.setId( resultSet.getInt( "id" ) );
                 comment.setArtId( resultSet.getInt( "art_id" ) );
-                comment.setHead( resultSet.getString( "head" ) );
+//                comment.setHead( resultSet.getString( "head" ) );
                 comment.setComment( resultSet.getString( "comment" ) );
                 comment.setNickName( resultSet.getString( "nick_name" ) );
                 comment.setDate( resultSet.getString( "date" ) );

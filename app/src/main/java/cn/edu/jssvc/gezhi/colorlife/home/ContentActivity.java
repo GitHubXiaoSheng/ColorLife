@@ -60,6 +60,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
         arts_info = MyApplication.mArtsInfoList;
         Intent intent = getIntent();
         id = intent.getIntExtra("id",1);
+        Log.d("作品id", id + "");
         init();
 
         for (Arts_info arts_info1 : arts_info) {
@@ -118,22 +119,23 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 return dbDao.queryAllCommentInfo(id);
             }
         });
-        try {
-            for (Comment comment : future.get()) {
-                Log.d("我看看", "运行了这里2222");
-                pinglun = new Pinglun();
-                pinglun.setTilteImg(comment.getHead());
-                pinglun.setNameText(comment.getNickName());
-                pinglun.setTimeText(comment.getDate());
-                pinglun.setContentText(comment.getComment());
-                pinglunList.add(pinglun);
-                pinglunAdapter.notifyDataSetChanged();
-            }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            for (Comment comment : future.get()) {
+//                Log.d("我看看", "运行了这里2222");
+//                pinglun = new Pinglun();
+//                pinglun.setTilteImg(comment.getHead());
+//                pinglun.setNameText(comment.getNickName());
+//                pinglun.setTimeText(comment.getDate());
+//                pinglun.setContentText(comment.getComment());
+//                pinglunList.add(pinglun);
+//                pinglunAdapter.notifyDataSetChanged();
+//            }
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
 
