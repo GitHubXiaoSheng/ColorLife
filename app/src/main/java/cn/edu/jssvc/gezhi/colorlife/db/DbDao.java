@@ -343,7 +343,7 @@ public class DbDao {
         String sql2 = "select * from comment";
         Comment comment;
         try {
-            ps = (PreparedStatement) conn.prepareStatement( sql );
+            ps = (PreparedStatement) conn.prepareStatement( sql2 );
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 comment = new Comment();

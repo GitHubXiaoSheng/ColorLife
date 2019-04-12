@@ -62,6 +62,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
         arts_info = MyApplication.mArtsInfoList;
         Intent intent = getIntent();
         id = intent.getIntExtra("id",1);
+        Log.d("作品id", id + "");
         init();
 
         for (Arts_info arts_info1 : arts_info) {
@@ -136,6 +137,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
 
