@@ -342,9 +342,8 @@ public class DbDao {
         String sql2 = "select * from comment";
         Comment comment;
         try {
-            ps = (PreparedStatement) conn.prepareStatement( sql2 );
+            ps = (PreparedStatement) conn.prepareStatement( sql );
             resultSet = ps.executeQuery();
-            if (resultSet==null)
             while (resultSet.next()) {
                 comment = new Comment();
                 comment.setId( resultSet.getInt( "id" ) );

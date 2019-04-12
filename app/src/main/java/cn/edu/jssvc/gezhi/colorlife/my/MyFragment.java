@@ -133,7 +133,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                             conn = DbConnection.getConnection();
 //                            Log.d(TAG, "querycommentinfo: 没有拿到conn");
                         }
-                        return dbDao.queryAllCommentInfo(1);
+                        return dbDao.queryAllCommentInfo(13);
                     }
                 });
                 break;
