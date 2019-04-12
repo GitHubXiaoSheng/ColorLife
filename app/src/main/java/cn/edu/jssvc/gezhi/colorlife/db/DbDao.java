@@ -370,7 +370,8 @@ public class DbDao {
                 ps.setString(4,comment.getDate());
                 ps.setString(5,comment.getHead());
                 Log.d(TAG, "insertArtInfoData: 执行了插入评论");
-                return ps.execute();
+                ps.execute();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
