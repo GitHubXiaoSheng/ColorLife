@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,6 +96,7 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
 //        button_lijigoumai = findViewById(R.id.contentactivity_goumai);
 //        button_lijigoumai.setOnClickListener(this);
         editText_pl = findViewById(R.id.editText_pl);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         button_fs = findViewById(R.id.button_fasong);
         button_fs.setOnClickListener(this);
         myListView = findViewById(R.id.content_listView);
@@ -112,11 +114,13 @@ public class ContentActivity extends AppCompatActivity implements View.OnClickLi
                 if (conn == null) {
                     conn = DbConnection.getConnection();
                 }
+                Log.d("我看看", "运行了这里1111");
                 return dbDao.queryAllCommentInfo(id);
             }
         });
         try {
             for (Comment comment : future.get()) {
+                Log.d("我看看", "运行了这里2222");
                 pinglun = new Pinglun();
                 pinglun.setTilteImg(comment.getHead());
                 pinglun.setNameText(comment.getNickName());
