@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/my_item5_2_img"
+        android:layout_width="@dimen/upload_img_width"
+        android:layout_height="@dimen/upload_img_width"
+        android:src="@drawable/commend3"/>
+</LinearLayout>

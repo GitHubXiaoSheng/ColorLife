@@ -19,6 +19,11 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
+    <TextView
+        android:id="@+id/fragmy_itme1_content_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"/>
     <ImageView
         android:id="@+id/fragmy_itme1_content_img"
         android:layout_width="match_parent"
@@ -81,9 +86,9 @@
             android:layout_weight="1"
             />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10px"
-        android:layout_marginTop="20dp"
-        android:background="#F0F0F0"></View>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10px"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:background="#F0F0F0"></View>-->
 </LinearLayout>

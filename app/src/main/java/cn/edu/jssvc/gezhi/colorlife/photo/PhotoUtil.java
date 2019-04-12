@@ -269,4 +269,23 @@ public class PhotoUtil {
 //        displayImage(imagePath);//自定义方法
     }
 
+    /**
+     * 动态权限申请
+     * @param activity
+     * @return
+     */
+    public static boolean isGrantedPermission(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            activity.requestPermissions(new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 1);
+
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="art_category">
+        <item>速写</item>
+        <item>素描</item>
+        <item>水彩</item>
+        <item>水粉</item>
+        <item>油画</item>
+        <item>水墨画</item>
+        <item>书法</item>
+        <item>马克笔画</item>
+    </string-array>
+    <string-array name="art_theme">
+        <item>肖像画</item>
+        <item>风景画</item>
+        <item>美食画</item>
+        <item>动物画</item>
+        <item>风俗画</item>
+    </string-array>
+</resources>

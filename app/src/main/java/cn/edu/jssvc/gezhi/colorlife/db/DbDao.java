@@ -22,6 +22,8 @@ import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
+import cn.edu.jssvc.gezhi.colorlife.bean.Comment;
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
 import cn.edu.jssvc.gezhi.colorlife.home.Arts_info;
@@ -32,6 +34,7 @@ import cn.edu.jssvc.gezhi.colorlife.home.Arts_info;
  */
 
 public class DbDao {
+    private String TAG = "数据库操作";
     private Connection conn;
     private PreparedStatement ps;
     private DbConnection dbConnection;
@@ -87,10 +90,7 @@ public class DbDao {
                     new Thread( new Runnable() {
                         @Override
                         public void run() {
-                            mArtsInfoList=queryArtsinfo();
-                            MyApplication.mArtsInfoList = mArtsInfoList;
                             mMemberInfoList=queryMemberInfo();
-                            Log.d("从数据库得到", "MemberInfo的数据个数有："+mMemberInfoList.size()+"      MemberInfo的数据个数有："+mArtsInfoList.size());
                         }
                     } ).start();
                     break;
@@ -248,6 +248,119 @@ public class DbDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean insertArtInfoData(ArtInfo artInfo){
+        String sql = "insert into arts_info(url,create_date,release_date,price,tags,author_id,classify_id,theme_id,content,map_title)values(?,?,?,?,?,?,?,?,?,?)";
+        try {
+//            ps = (PreparedStatement) conn.prepareStatement(sql);
+            if (conn!=null){
+                ps=  (PreparedStatement)conn.prepareStatement(sql);
+//                ps.setInt(1,memberInfo.getMemberId());
+                ps.setString(1,artInfo.getUrl());
+                ps.setString(2,artInfo.getCreateData());
+                ps.setString(3,artInfo.getReleaseData());
+                ps.setFloat(4,artInfo.getPrice());
+                ps.setString(5,artInfo.getTags());
+                ps.setInt(6,artInfo.getAuthorId());
+                ps.setInt(7,artInfo.getClassifyId());
+                ps.setInt(8,artInfo.getThemeId());
+                ps.setString(9,artInfo.getContent());
+                ps.setString(10,artInfo.getMapTitle());
+                Log.d(TAG, "insertArtInfoData: 执行了插入艺术品");
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 查询arts_info表，将authorId创建的所有数据存到列表里面
+     * @return
+     */
+    public List<ArtInfo> queryAllArtInfo( int authorId) {//查询方法，返回List
+        List<ArtInfo> artInfoList = new ArrayList<>();
+        String sql = "select * from arts_info where author_id = \'"+authorId+"\'";
+        ArtInfo artInfo;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                artInfo = new ArtInfo();
+                artInfo.setId( resultSet.getInt( "art_id" ) );
+                artInfo.setUrl( resultSet.getString( "url" ) );
+                artInfo.setCreateData( resultSet.getString( "create_date" ) );
+                artInfo.setReleaseData( resultSet.getString( "release_date" ) );
+                artInfo.setPrice( resultSet.getFloat( "price" ) );
+                artInfo.setTags(resultSet.getString( "tags"));
+                artInfo.setAuthorId(resultSet.getInt( "author_id"));
+                artInfo.setClassifyId(resultSet.getInt( "classify_id"));
+                artInfo.setThemeId(resultSet.getInt( "theme_id"));
+                artInfo.setContent(resultSet.getString( "content"));
+                artInfo.setMapTitle( resultSet.getString( "map_title" ) );
+                artInfoList.add( artInfo );
+                Log.d( "tag-querymemberinfo", artInfo.toString() );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            dbConnection.closeConn();
+        }
+        return artInfoList;
+    }
+
+    public boolean insertCommentData(Comment comment){
+        String sql = "insert into arts_info(art_id,nick_name,comment,date)values(?,?,?,?)";
+        try {
+//            ps = (PreparedStatement) conn.prepareStatement(sql);
+            if (conn!=null){
+                ps=  (PreparedStatement)conn.prepareStatement(sql);
+//                ps.setInt(1,memberInfo.getMemberId());
+                ps.setInt(1,comment.getArtId());
+                ps.setString(2,comment.getNickName());
+                ps.setString(3,comment.getComment());
+                ps.setString(4,comment.getDate());
+                Log.d(TAG, "insertArtInfoData: 执行了插入评论");
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 查询arts_info表，将authorId创建的所有数据存到列表里面
+     * @return
+     */
+    public List<Comment> queryAllCommentInfo( int artId) {//查询方法，返回List
+        Log.d( "tag-querycommentinfo","开始查询");
+        List<Comment> commentList = new ArrayList<>();
+        String sql = "select * from comment where art_id = \'"+artId+"\'";
+        String sql2 = "select * from comment";
+        Comment comment;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement( sql2 );
+            resultSet = ps.executeQuery();
+            if (resultSet==null)
+            while (resultSet.next()) {
+                comment = new Comment();
+                comment.setId( resultSet.getInt( "id" ) );
+                comment.setArtId( resultSet.getInt( "art_id" ) );
+                comment.setComment( resultSet.getString( "comment" ) );
+                comment.setNickName( resultSet.getString( "nick_name" ) );
+                comment.setNickName( resultSet.getString( "date" ) );
+                commentList.add( comment );
+                Log.d( "tag-querycommentinfo", comment.toString() );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            dbConnection.closeConn();
+        }
+        return commentList;
     }
 
 }
