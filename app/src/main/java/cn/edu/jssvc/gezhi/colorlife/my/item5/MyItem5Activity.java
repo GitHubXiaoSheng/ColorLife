@@ -48,6 +48,7 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
     private ImageView my_item5_back_img;
     private ImageView my_item5_content_img;
     private Button my_item5_ok_btn;
+    private EditText my_item5_title_et;
     private EditText my_item5_content_et;
 //    private RecyclerView my_item5_recyclerview;
     private Spinner my_item5_category_spinner;
@@ -83,6 +84,7 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
         my_item5_content_img.setOnClickListener(this);
         my_item5_ok_btn = (Button) findViewById(R.id.my_item5_ok_btn);
         my_item5_content_et = (EditText) findViewById(R.id.my_item5_content_et);
+        my_item5_title_et = (EditText) findViewById(R.id.my_item5_maptitle_et);
         my_item5_category_spinner = (Spinner) findViewById(R.id.my_item5_category_spinner);
         my_item5_theme_spinner = (Spinner) findViewById(R.id.my_item5_theme_spinner);
 //        bitmapList = new ArrayList<>();
@@ -119,6 +121,11 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
 
     private void submit() {
         // validate
+        String title = my_item5_title_et.getText().toString().trim();
+        if (TextUtils.isEmpty(title)) {
+            Toast.makeText(this, "为作品起一个名字！", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String content = my_item5_content_et.getText().toString().trim();
         if (TextUtils.isEmpty(content)) {
             Toast.makeText(this, "解说一下作品吧！", Toast.LENGTH_SHORT).show();
@@ -148,6 +155,7 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
         artInfo.setClassifyId(my_item5_category_spinner.getSelectedItemPosition()+1);
         artInfo.setThemeId(my_item5_theme_spinner.getSelectedItemPosition()+1);
         artInfo.setPrice(Float.parseFloat(price));
+        artInfo.setMapTitle(title);
         artInfo.setCreateData(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
         conn = dbDao.getConn();
 //        for (int i=0;i<imgPathList.size();i++){
@@ -164,7 +172,6 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
                         Future<Boolean> future = MyApplication.executorService.submit(new Callable<Boolean>() {
                             @Override
                             public Boolean call() throws Exception {
-                                Log.d(TAG, "call: "+dbDao.insertArtInfoData(artInfo));
                                 return dbDao.insertArtInfoData(artInfo);
                             }
                         });
