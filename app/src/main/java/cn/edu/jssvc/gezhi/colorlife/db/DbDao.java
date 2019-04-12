@@ -359,7 +359,7 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-//            dbConnection.closeConn();
+            dbConnection.closeConn();
         }
         return commentList;
     }

@@ -124,18 +124,7 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 startActivityForResult(headIntent,1);
                 break;
             case R.id.fragmy_item1_layout://艺术走廊
-                Future<List<Comment>> future = MyApplication.executorService.submit(new Callable<List<Comment>>() {
-                    @Override
-                    public List<Comment> call() throws Exception {
-                        DbDao dbDao = new DbDao();
-                        Connection conn = dbDao.getConn();
-                        if (conn == null) {
-                            conn = DbConnection.getConnection();
-//                            Log.d(TAG, "querycommentinfo: 没有拿到conn");
-                        }
-                        return dbDao.queryAllCommentInfo(13);
-                    }
-                });
+
                 break;
             case R.id.fragmy_item2_layout://艺术圈
                 Intent item1Intent = new Intent(getActivity(), MyItem2Activity.class);
