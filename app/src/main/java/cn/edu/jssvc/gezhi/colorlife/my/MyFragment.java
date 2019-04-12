@@ -131,7 +131,10 @@ public class MyFragment extends Fragment implements View.OnClickListener{
                 item1Intent.putExtra("itemIntent", 1);
                 startActivity(item1Intent);
                 break;
-            case R.id.fragmy_item3_layout:
+            case R.id.fragmy_item3_layout://我的藏品
+                Intent item3Intent = new Intent(getActivity(), MyItem2Activity.class);
+                item3Intent.putExtra("itemIntent", 3);
+                startActivity(item3Intent);
                 break;
             case R.id.fragmy_item4_layout://我的艺术
                 Intent item4Intent = new Intent(getActivity(), MyItem2Activity.class);
@@ -170,7 +173,10 @@ public class MyFragment extends Fragment implements View.OnClickListener{
     public void onResume() {
         super.onResume();
         if(isVisible()){
-            Glide.with(this).load(Shared.getString(getContext(), "accountPhoto", "")).into(headImg);
+            String headUrl = Shared.getString(getContext(), "accountPhoto", "");
+            if(!headUrl.equals("")){
+                Glide.with(this).load(headUrl).into(headImg);
+            }
             nameTv.setText(Shared.getString(getContext(),"account",""));
             gradeTv.setText("Lv." + Shared.getInt(getContext(),"accountlevel",0));
         }
