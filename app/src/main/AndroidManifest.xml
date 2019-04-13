@@ -18,7 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".my.setting.SettingActivity"/>
         <activity
             android:name=".my.item3.MyItem3Activity"
             android:launchMode="singleTask" />

@@ -92,7 +92,7 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
                     try {
                         bean = new Item2_Bean(future.get().getPhotoUrl(),
                                 future.get().getNickName(), artInfo.getContent(),
-                                artInfo.getUrl(), (int)(Math.random()*10+10), commentNum, 62,false);
+                                artInfo.getUrl(), (int)(Math.random()*10+10), commentNum, (int)(Math.random()*10+10),false);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -110,7 +110,8 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
                         collectorList = dbDao.queryCollectorInfo(memberId);
                         for(int i=0;i<collectorList.size();i++){
                             Collector collector = collectorList.get(i);
-                            Item2_Bean bean = new Item2_Bean(imgUrl, account, "", collector.getArtUrl(), 45, 45, 56,true);
+                            commentNum = dbDao.queryCommentNum(collector.getArtsId());
+                            Item2_Bean bean = new Item2_Bean(imgUrl, account, "", collector.getArtUrl(), (int)(Math.random()*10+10), commentNum, (int)(Math.random()*10+10),true);
                             beanList.add(bean );
                         }
                         return true;
@@ -141,7 +142,9 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
                             artInfoList = dbDao.queryAllArtInfo(Shared.getInt(MyItem2Activity.this, "accountId", -1));
                             for(int i=0;i<artInfoList.size();i++){
                                 ArtInfo artInfo = artInfoList.get(i);
-                                beanList.add(new Item2_Bean(imgUrl,account,artInfo.getContent(),artInfo.getUrl(),45,45,56,false));
+                                commentNum = dbDao.queryCommentNum(artInfo.getId());
+                                beanList.add(new Item2_Bean(imgUrl,account,artInfo.getContent(),artInfo.getUrl(),
+                                        (int)(Math.random()*10+10),commentNum,(int)(Math.random()*10+10),false));
                             }
                             return true;
                         }
