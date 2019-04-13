@@ -1,5 +1,6 @@
 package cn.edu.jssvc.gezhi.colorlife.search;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,7 +93,7 @@ private View view;
 //        initSearch();
         setData();
 
-            initView();
+        initView();
 
 
 
@@ -131,11 +133,14 @@ private View view;
     }
 
     void initedit(){
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText.setText("");
                 editText.clearFocus();
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
