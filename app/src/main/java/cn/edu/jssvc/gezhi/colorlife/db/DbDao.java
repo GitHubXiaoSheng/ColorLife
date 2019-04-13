@@ -137,7 +137,7 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-//            dbConnection.closeConn();
+            dbConnection.closeConn();
         }
         return arts_infoList;
     }
@@ -215,6 +215,51 @@ public class DbDao {
         }
 //        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
         return memberInfo;
+    }
+    public MemberInfo queryMemberInfo(int memberId){
+        MemberInfo memberInfo = null;
+        try {
+//            String sql = "select * from member_info where nick_name = \'"+account+"\' and password = \'"+password+"\'";
+            String sql = "select * from member_info where member_id = \'"+memberId+"\'";
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            if(resultSet.next()){
+                memberInfo = new MemberInfo();
+                memberInfo.setId( resultSet.getInt( "member_id" ) );
+                memberInfo.setNickName( resultSet.getString( "nick_name" ) );
+//                memberInfo.setRealName( resultSet.getString( 3 ) );
+                memberInfo.setPhotoUrl( resultSet.getString( "head_photo" ) );
+                memberInfo.setPassword( resultSet.getString( "password" ) );
+                memberInfo.setRegisterDate( resultSet.getString( "register_date" ) );
+                memberInfo.setPhone(resultSet.getString( "telephone"));
+                memberInfo.setHobbies(resultSet.getString( "hobbies"));
+                memberInfo.setSex(resultSet.getString( "sex"));
+                memberInfo.setBirthday(resultSet.getString( "birthday"));
+                memberInfo.setPostalAddress(resultSet.getString( "postal_address"));
+                memberInfo.setPoints( resultSet.getInt( "points" ) );
+                memberInfo.setMatto( resultSet.getString( "matto" ) );
+                memberInfo.setLevel( resultSet.getInt( "level" ) );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
+        return memberInfo;
+    }
+
+    public String queryMemberHead(int memberId){
+        try {
+            String sql = "select * from member_info where member_id = \'"+memberId+"\'";
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            if(resultSet.next()){
+                return  ( resultSet.getString( "head_photo" ) );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
+        return "";
     }
 
     /**

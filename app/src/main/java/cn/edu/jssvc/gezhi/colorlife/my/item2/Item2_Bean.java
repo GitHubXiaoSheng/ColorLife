@@ -1,16 +1,16 @@
 package cn.edu.jssvc.gezhi.colorlife.my.item2;
 
 public class Item2_Bean {
-    private String headImgUrl;
-    private String name;
-    private String content;
-    private String contentmgUrl;
-    private int share;
-    private int comment;
-    private int like;
-    private boolean isLike;
+    private String headImgUrl;//用户头像
+    private String name;//用户名
+    private String content;//内容
+    private String contentmgUrl;//艺术图片
+    private int share;//分享数
+    private int comment;//讨论数
+    private int like;//喜欢数
+    private boolean isLikeing;
 
-    public Item2_Bean(String headImgUrl, String name, String content, String contentmgUrl, int share, int comment, int like) {
+    public Item2_Bean(String headImgUrl, String name, String content, String contentmgUrl, int share, int comment, int like, boolean isLike) {
         this.headImgUrl = headImgUrl;
         this.name = name;
         this.content = content;
@@ -18,14 +18,15 @@ public class Item2_Bean {
         this.share = share;
         this.comment = comment;
         this.like = like;
+        this.isLikeing = isLike;
     }
 
-    public boolean isLike() {
-        return isLike;
+    public boolean isLikeing() {
+        return isLikeing;
     }
 
-    public void setLike(boolean like) {
-        isLike = like;
+    public void setLikeing(boolean like) {
+        isLikeing = like;
     }
 
     public String getContent() {
@@ -89,10 +90,12 @@ public class Item2_Bean {
         return "Item2_Bean{" +
                 "headImgUrl='" + headImgUrl + '\'' +
                 ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
                 ", contentmgUrl='" + contentmgUrl + '\'' +
                 ", share=" + share +
                 ", comment=" + comment +
                 ", like=" + like +
+                ", isLikeing=" + isLikeing +
                 '}';
     }
 }

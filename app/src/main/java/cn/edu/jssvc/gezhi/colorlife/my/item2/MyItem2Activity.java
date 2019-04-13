@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,8 +20,10 @@ import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
 import cn.edu.jssvc.gezhi.colorlife.bean.Collector;
+import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
 import cn.edu.jssvc.gezhi.colorlife.db.DbConnection;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
+import cn.edu.jssvc.gezhi.colorlife.home.Arts_info;
 import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 
 public class MyItem2Activity extends AppCompatActivity implements View.OnClickListener {
@@ -67,13 +68,27 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initData() {
-//        conn = dbDao.getConn();
-//        Log.d(TAG, "queryAllArtInfo: "+position);
         switch (position) {
             case 1:
                 myitem1_title_tv.setText("艺术圈");
-                for (int i = 0; i < 5; i++) {
-                    beanList.add(new Item2_Bean("", "一口蒸鸡蛋","", "", 24, 35, 62));
+                for (int i = 0; i < MyApplication.mArtsInfoList.size(); i++) {
+                    final Arts_info artInfo = MyApplication.mArtsInfoList.get(i);
+                    Future<MemberInfo> future = MyApplication.executorService.submit(new Callable<MemberInfo>() {
+                        @Override
+                        public MemberInfo call() throws Exception {
+                            conn = DbConnection.getConnection();
+                            return dbDao.queryMemberInfo(artInfo.getAuthor_id());
+                        }
+                    });
+                    Item2_Bean bean = null;
+                    try {
+                        bean = new Item2_Bean(future.get().getPhotoUrl(), future.get().getNickName(), artInfo.getContent(), artInfo.getUrl(), 24, 35, 62,false);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    beanList.add(bean);
                 }
                 break;
             case 3:
@@ -85,7 +100,8 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
                         collectorList = dbDao.queryCollectorInfo(memberId);
                         for(int i=0;i<collectorList.size();i++){
                             Collector collector = collectorList.get(i);
-                            beanList.add(new Item2_Bean(imgUrl,account,"",collector.getArtUrl(),45,45,56));
+                            Item2_Bean bean = new Item2_Bean(imgUrl, account, "", collector.getArtUrl(), 45, 45, 56,true);
+                            beanList.add(bean );
                         }
                         return true;
                     }
@@ -115,7 +131,7 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
                             artInfoList = dbDao.queryAllArtInfo(Shared.getInt(MyItem2Activity.this, "accountId", -1));
                             for(int i=0;i<artInfoList.size();i++){
                                 ArtInfo artInfo = artInfoList.get(i);
-                                beanList.add(new Item2_Bean(imgUrl,account,artInfo.getContent(),artInfo.getUrl(),45,45,56));
+                                beanList.add(new Item2_Bean(imgUrl,account,artInfo.getContent(),artInfo.getUrl(),45,45,56,false));
                             }
                             return true;
                         }

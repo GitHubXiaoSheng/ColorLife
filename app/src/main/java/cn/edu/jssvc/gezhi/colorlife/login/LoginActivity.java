@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Connection conn;
     private ImageView login_back_img;
 
+    private String imgUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         login_back_img.setOnClickListener(this);
         login_register.setOnClickListener(this);
+
+        imgUrl = Shared.getString(this, "accountPhoto", "");
+        if(!TextUtils.isEmpty(imgUrl)){
+            Glide.with(this).load(imgUrl).into(login_headimg);
+        }
     }
 
     @Override
