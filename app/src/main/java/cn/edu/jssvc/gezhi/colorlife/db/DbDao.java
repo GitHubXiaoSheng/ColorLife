@@ -252,6 +252,41 @@ public class DbDao {
         return false;
     }
 
+    /**
+     * 更改记录
+     * @param memberInfo 要更改的对象
+     * @return 是否更改成功
+     */
+    public boolean insertMemberInfoDataRegister(MemberInfo memberInfo,String str_dnagqian){
+        String sql = "update member_info set nick_name=" + str_dnagqian + " where real_name='蓝色小名'";
+        try {
+//            ps = (PreparedStatement) conn.prepareStatement(sql);
+            if (conn!=null){
+                ps=  (PreparedStatement)conn.prepareStatement(sql);
+//                ps.setInt(1,memberInfo.getMemberId());
+                ps.setString(1,memberInfo.getNickName());
+                ps.setString(2,memberInfo.getRealName());
+                ps.setString(3,memberInfo.getPhotoUrl());
+                ps.setString(4,memberInfo.getPassword());
+                ps.setString(5,memberInfo.getRegisterDate());
+                ps.setString(6,memberInfo.getQQ());
+                ps.setString(7,memberInfo.getPhone());
+                ps.setString(8,memberInfo.getHobbies());
+                ps.setString(9,memberInfo.getSex());
+                ps.setString(10,memberInfo.getBirthday());
+                ps.setString(11,memberInfo.getPostalAddress());
+                ps.setInt(12,memberInfo.getPoints());
+                ps.setString(13,memberInfo.getMatto());
+                ps.setInt(14,memberInfo.getLevel());
+                Log.d("insert","memberInfo");
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean insertArtInfoData(ArtInfo artInfo){
         String sql = "insert into arts_info(url,create_date,release_date,price,tags,author_id,classify_id,theme_id,content,map_title)values(?,?,?,?,?,?,?,?,?,?)";
         try {

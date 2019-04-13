@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
         try {
-            Log.d(TAG, "testE: "+future.get().toString());
+//            Log.d(TAG, "testE: "+future.get().toString());
             if(future.get()!=null){
                 memberInfo = future.get();
                 return true;

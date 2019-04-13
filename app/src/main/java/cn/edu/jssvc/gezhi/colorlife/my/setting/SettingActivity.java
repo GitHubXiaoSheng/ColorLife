@@ -1,4 +1,4 @@
-package cn.edu.jssvc.gezhi.colorlife.register;
+package cn.edu.jssvc.gezhi.colorlife.my.setting;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,9 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -35,7 +36,6 @@ import java.util.concurrent.Future;
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.R;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
-import cn.edu.jssvc.gezhi.colorlife.db.DbConnection;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
 import cn.edu.jssvc.gezhi.colorlife.http.WebApi;
 import cn.edu.jssvc.gezhi.colorlife.http.WebListener;
@@ -43,24 +43,25 @@ import cn.edu.jssvc.gezhi.colorlife.photo.PhotoUtil;
 import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+
     private String TAG = "RegisterActivity";
 
-    private ImageView register_back_img;
-    private CircleImageView singup_headimg_img;
-    private EditText singup_nickname_et;
-    private EditText singup_password_et;
-    private EditText signup_password2_et;
-    private EditText signup_qq_et;
-    private EditText signup_telephone_et;
-    private EditText signup_hobby_et;
-    private RadioButton singup_sex_nan_radiobtn;
-    private RadioButton singup_sex_nv_radiobtn;
-    private RadioGroup singup_sex_radiogroup;
-    private EditText signup_birthday_et;
-    private EditText signup_address_et;
-    private Button signup_submit_btn;
-    private Button singup_cancel_btn;
+    private TextView textView_name;    //名字
+    private ImageView setting_back_img;
+    private CircleImageView setting_headimg_img;
+    private EditText setting_password_et;
+    private EditText setting_password2_et;
+    private EditText setting_qq_et;
+    private EditText setting_telephone_et;
+    private EditText setting_hobby_et;
+    private RadioButton setting_sex_nan_radiobtn;
+    private RadioButton setting_sex_nv_radiobtn;
+    private RadioGroup setting_sex_radiogroup;
+    private EditText setting_birthday_et;
+    private EditText setting_address_et;
+    private Button setting_submit_btn;
+    private Button setting_cancel_btn;
 
     private String imagePath;//准备上传的本地图片路径
     private DbDao dbDao;
@@ -75,31 +76,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_layout);
+        setContentView(R.layout.activity_setting);
         initView();
+        textView_name.setText("更改资料的账号为：   " + Shared.getString(SettingActivity.this, "account", ""));
+
     }
 
     private void initView() {
-        register_back_img = (ImageView) findViewById(R.id.register_back_img);
-        singup_headimg_img = (CircleImageView) findViewById(R.id.singup_headimg_img);
-        singup_nickname_et = (EditText) findViewById(R.id.singup_nickname_et);
-        singup_password_et = (EditText) findViewById(R.id.singup_password_et);
-        signup_password2_et = (EditText) findViewById(R.id.signup_password2_et);
-        signup_qq_et = (EditText) findViewById(R.id.signup_qq_et);
-        signup_telephone_et = (EditText) findViewById(R.id.signup_telephone_et);
-        signup_hobby_et = (EditText) findViewById(R.id.signup_hobby_et);
-        singup_sex_nan_radiobtn = (RadioButton) findViewById(R.id.singup_sex_nan_radiobtn);
-        singup_sex_nv_radiobtn = (RadioButton) findViewById(R.id.singup_sex_nv_radiobtn);
-        singup_sex_radiogroup = (RadioGroup) findViewById(R.id.singup_sex_radiogroup);
-        signup_birthday_et = (EditText) findViewById(R.id.signup_birthday_et);
-        signup_address_et = (EditText) findViewById(R.id.signup_address_et);
-        signup_submit_btn = (Button) findViewById(R.id.signup_submit_btn);
-        singup_cancel_btn = (Button) findViewById(R.id.singup_cancel_btn);
+        setting_back_img = (ImageView) findViewById(R.id.setting_back_img);
+        setting_headimg_img = (CircleImageView) findViewById(R.id.setting_headimg_img);
+        textView_name = (TextView) findViewById(R.id.setting_name_tv);
+        setting_password_et = (EditText) findViewById(R.id.setting_password_et);
+        setting_password2_et = (EditText) findViewById(R.id.setting_password2_et);
+        setting_qq_et = (EditText) findViewById(R.id.setting_qq_et);
+        setting_telephone_et = (EditText) findViewById(R.id.setting_telephone_et);
+        setting_hobby_et = (EditText) findViewById(R.id.setting_hobby_et);
+        setting_sex_nan_radiobtn = (RadioButton) findViewById(R.id.setting_sex_nan_radiobtn);
+        setting_sex_nv_radiobtn = (RadioButton) findViewById(R.id.setting_sex_nv_radiobtn);
+        setting_sex_radiogroup = (RadioGroup) findViewById(R.id.setting_sex_radiogroup);
+        setting_birthday_et = (EditText) findViewById(R.id.setting_birthday_et);
+        setting_address_et = (EditText) findViewById(R.id.setting_address_et);
+        setting_submit_btn = (Button) findViewById(R.id.setting_submit_btn);
+        setting_cancel_btn = (Button) findViewById(R.id.setting_cancel_btn);
 
-        register_back_img.setOnClickListener(this);
-        singup_headimg_img.setOnClickListener(this);
-        signup_submit_btn.setOnClickListener(this);
-        singup_cancel_btn.setOnClickListener(this);
+        setting_back_img.setOnClickListener(this);
+        setting_headimg_img.setOnClickListener(this);
+        setting_submit_btn.setOnClickListener(this);
+        setting_cancel_btn.setOnClickListener(this);
         dbDao = new DbDao();
         memberInfo = new MemberInfo();
     }
@@ -107,19 +110,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.singup_headimg_img:
+            case R.id.setting_headimg_img:
                 if (isGrantedPermission(this)) {
                     PhotoUtil.openAlbum(this);
                 }
                 break;
-            case R.id.signup_submit_btn:
+            case R.id.setting_submit_btn:
                 submit();
                 break;
-            case R.id.singup_cancel_btn:
-
-                   finish();
-
-            case R.id.register_back_img:
+            case R.id.setting_cancel_btn:
+                finish();
+            case R.id.setting_back_img:
                 finish();
                 break;
             default:
@@ -129,19 +130,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void submit() {
         // validate
-        final String nickname = singup_nickname_et.getText().toString().trim();
-        if (TextUtils.isEmpty(nickname)) {
-            Toast.makeText(this, "账号不能为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        final String password = singup_password_et.getText().toString().trim();
+        final String password = setting_password_et.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String password2 = signup_password2_et.getText().toString().trim();
+        String password2 = setting_password2_et.getText().toString().trim();
         if (TextUtils.isEmpty(password2)) {
             Toast.makeText(this, "请确认密码", Toast.LENGTH_SHORT).show();
             return;
@@ -149,43 +144,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
         }
 
-        String qq = signup_qq_et.getText().toString().trim();
+        String qq = setting_qq_et.getText().toString().trim();
 //        if (TextUtils.isEmpty(qq)) {
 //            Toast.makeText(this, "et不能为空", Toast.LENGTH_SHORT).show();
 ////            return;
 //        }
 
-        final String telephone = signup_telephone_et.getText().toString().trim();
+        final String telephone = setting_telephone_et.getText().toString().trim();
 //        if (TextUtils.isEmpty(telephone)) {
 //            Toast.makeText(this, "et不能为空", Toast.LENGTH_SHORT).show();
 ////            return;
 //        }
 
-        final String hobby = signup_hobby_et.getText().toString().trim();
+        final String hobby = setting_hobby_et.getText().toString().trim();
 //        if (TextUtils.isEmpty(hobby)) {
 //            Toast.makeText(this, "et不能为空", Toast.LENGTH_SHORT).show();
 ////            return;
 //        }
 
-        if (singup_sex_radiogroup.getCheckedRadioButtonId() == R.id.singup_sex_nan_radiobtn) {
+        if (setting_sex_radiogroup.getCheckedRadioButtonId() == R.id.singup_sex_nan_radiobtn) {
             sex = "男";
         } else {
             sex = "女";
         }
 
-        final String birthday = signup_birthday_et.getText().toString().trim();
+        final String birthday = setting_birthday_et.getText().toString().trim();
 //        if (TextUtils.isEmpty(birthday)) {
 //            Toast.makeText(this, "et不能为空", Toast.LENGTH_SHORT).show();
 ////            return;
 //        }
 
-        final String address = signup_address_et.getText().toString().trim();
+        final String address = setting_address_et.getText().toString().trim();
 //        if (TextUtils.isEmpty(address)) {
 //            Toast.makeText(this, "et不能为空", Toast.LENGTH_SHORT).show();
 ////            return;
 //        }
-        memberInfo.setNickName(nickname);
-        imgFileName = setFileName(nickname);
         memberInfo.setPhotoUrl(imgUrlPath + File.separator + imgFileName);
         memberInfo.setPassword(password);
         memberInfo.setRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis())));
@@ -194,9 +187,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         memberInfo.setSex(sex);
         memberInfo.setBirthday(birthday);
         memberInfo.setPostalAddress(address);
-        memberInfo.setPoints(100);
-        memberInfo.setMatto("");
-        memberInfo.setLevel(1);
         conn = dbDao.getConn();
         try {
             WebApi.getInstance().uploadImage(imagePath, WebApi.TAG_HEAD, iisUrl, imgFileName, new WebListener() {
@@ -205,14 +195,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Future<Boolean> future = MyApplication.executorService.submit(new Callable<Boolean>() {
                         @Override
                         public Boolean call() throws Exception {
-                            return dbDao.insertMemberInfoData(memberInfo);
+                            return dbDao.insertMemberInfoDataRegister(memberInfo,textView_name.getText().toString());
                         }
                     });
                     try {
                         if(future.get()){
-                            Intent intent = new Intent();
-                            intent.putExtra("register", memberInfo);
-                            setResult(RESULT_OK, intent);
                             conn.close();
                             finish();
                         }
@@ -227,6 +214,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 @Override
                 public void onFailure() {
+
                 }
             });
         } catch (IOException e) {
@@ -265,7 +253,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void displayImage(final String imagePath) {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            singup_headimg_img.setImageBitmap(bitmap);
+            setting_headimg_img.setImageBitmap(bitmap);
         }
     }
 
@@ -285,8 +273,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public boolean isGrantedPermission(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-            activity.requestPermissions(new String[]{
+                    activity.requestPermissions(new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, 1);
