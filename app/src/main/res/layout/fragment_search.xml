@@ -39,6 +39,7 @@
                       android:layout_gravity="center"
                       android:layout_marginRight="10dp"
                       android:src="@drawable/lhd_delete"
+                      android:id="@+id/lhd_delete"
                       />
                   <Button
                       android:layout_width="wrap_content"

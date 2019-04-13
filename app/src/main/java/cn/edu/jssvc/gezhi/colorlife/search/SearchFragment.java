@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ private View view;
     private LinearLayout linearLayout;
     private MyAdapter adapter = null;
     private Button search;
+    private ImageView delete;
 
     private String mNames[] = {
             "水彩画细节","如何提高画画技术","中西结合的作品",
@@ -79,6 +81,7 @@ private View view;
         listView = (ListView)view.findViewById(R.id.ls_view);
         linearLayout = (LinearLayout)view.findViewById(R.id.listview_1);
         search = (Button)view.findViewById(R.id.search);
+        delete  = (ImageView)view.findViewById(R.id.lhd_delete);
 //        mSearchView.setFocusable(false);
 //        mSearchView.clearFocus();
         replacefragment(new PaihangFragment());
@@ -128,6 +131,12 @@ private View view;
     }
 
     void initedit(){
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText("");
+            }
+        });
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
