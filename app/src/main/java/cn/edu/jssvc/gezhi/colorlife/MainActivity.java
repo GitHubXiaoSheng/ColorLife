@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView(){
+        DbDao dbDao = new DbDao();
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.mian_bottomnavigationview);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -44,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new HomeFragment()).commit();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        DbDao dbDao = new DbDao();
-        index = getIntent().getIntExtra("BackToMainAction", R.id.main_navigation_1);
-        replaceFragment(index);
+//        index = getIntent().getIntExtra("BackToMainAction", R.id.main_navigation_1);
+//        replaceFragment(index);
     }
 
     private void replaceFragment(int index){
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
-
+//        bottomNavigationView.setSelectedItemId(index);
     }
 
 }

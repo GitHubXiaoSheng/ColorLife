@@ -3,6 +3,7 @@ package cn.edu.jssvc.gezhi.colorlife.my.item2;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,11 @@ public class Item2_Adapter extends RecyclerView.Adapter<Item2_Adapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int i) {
         final Item2_Bean bean = beanList.get(i);
-        bean.setLike(false);
-        holder.headImg.setImageResource(R.mipmap.default_head);
+        if(bean.getHeadImgUrl().equals("")){
+            holder.headImg.setImageResource(R.mipmap.default_head);
+        }else {
+            Glide.with(context).load(bean.getHeadImgUrl()).into(holder.headImg);
+        }
         if(bean.getContentmgUrl().equals("")){
             holder.contentImg.setImageResource(R.drawable.zzj_a);
         }else {
@@ -47,17 +51,24 @@ public class Item2_Adapter extends RecyclerView.Adapter<Item2_Adapter.ViewHolder
         holder.comment.setText(String.valueOf(bean.getComment()));
         holder.like.setText(String.valueOf(bean.getLike()));
         holder.contentTv.setText(bean.getContent());
+        if(bean.isLikeing()){
+            holder.likeImg.setImageResource(R.drawable.icon_likeing);
+            holder.like.setText(String.valueOf(bean.getLike()+1));
+        }else {
+            holder.likeImg.setImageResource(R.drawable.icon_like);
+            holder.like.setText(String.valueOf(bean.getLike()));
+        }
         holder.likeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bean.isLike()){
-                    holder.likeImg.setImageResource(R.drawable.icon_likeing);
-                    holder.like.setText(String.valueOf(bean.getLike()+1));
-                    bean.setLike(false);
-                }else {
+                if(bean.isLikeing()){
                     holder.likeImg.setImageResource(R.drawable.icon_like);
                     holder.like.setText(String.valueOf(bean.getLike()));
-                    bean.setLike(true);
+                    bean.setLikeing(false);
+                }else {
+                    holder.likeImg.setImageResource(R.drawable.icon_likeing);
+                    holder.like.setText(String.valueOf(bean.getLike()+1));
+                    bean.setLikeing(true);
                 }
             }
         });

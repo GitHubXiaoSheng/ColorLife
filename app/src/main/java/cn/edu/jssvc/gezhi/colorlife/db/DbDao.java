@@ -8,9 +8,6 @@ import android.util.Log;
 
 
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import cn.edu.jssvc.gezhi.colorlife.bean.ArtInfo;
+import cn.edu.jssvc.gezhi.colorlife.bean.Collector;
 import cn.edu.jssvc.gezhi.colorlife.bean.Comment;
 import cn.edu.jssvc.gezhi.colorlife.MyApplication;
 import cn.edu.jssvc.gezhi.colorlife.bean.MemberInfo;
@@ -215,6 +213,51 @@ public class DbDao {
 //        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
         return memberInfo;
     }
+    public MemberInfo queryMemberInfo(int memberId){
+        MemberInfo memberInfo = null;
+        try {
+//            String sql = "select * from member_info where nick_name = \'"+account+"\' and password = \'"+password+"\'";
+            String sql = "select * from member_info where member_id = \'"+memberId+"\'";
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            if(resultSet.next()){
+                memberInfo = new MemberInfo();
+                memberInfo.setId( resultSet.getInt( "member_id" ) );
+                memberInfo.setNickName( resultSet.getString( "nick_name" ) );
+//                memberInfo.setRealName( resultSet.getString( 3 ) );
+                memberInfo.setPhotoUrl( resultSet.getString( "head_photo" ) );
+                memberInfo.setPassword( resultSet.getString( "password" ) );
+                memberInfo.setRegisterDate( resultSet.getString( "register_date" ) );
+                memberInfo.setPhone(resultSet.getString( "telephone"));
+                memberInfo.setHobbies(resultSet.getString( "hobbies"));
+                memberInfo.setSex(resultSet.getString( "sex"));
+                memberInfo.setBirthday(resultSet.getString( "birthday"));
+                memberInfo.setPostalAddress(resultSet.getString( "postal_address"));
+                memberInfo.setPoints( resultSet.getInt( "points" ) );
+                memberInfo.setMatto( resultSet.getString( "matto" ) );
+                memberInfo.setLevel( resultSet.getInt( "level" ) );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
+        return memberInfo;
+    }
+
+    public String queryMemberHead(int memberId){
+        try {
+            String sql = "select * from member_info where member_id = \'"+memberId+"\'";
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            if(resultSet.next()){
+                return  ( resultSet.getString( "head_photo" ) );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        Log.d("testE:", "queryMemberInfo: "+memberInfo.toString());
+        return "";
+    }
 
     /**
      * 插入记录
@@ -251,6 +294,41 @@ public class DbDao {
         return false;
     }
 
+    /**
+     * 更改记录
+     * @param memberInfo 要更改的对象
+     * @return 是否更改成功
+     */
+//    public boolean insertMemberInfoDataRegister(MemberInfo memberInfo,String str_dnagqian){
+//        String sql = "update member_info set nick_name=" + str_dnagqian + " where real_name='蓝色小名'";
+//        try {
+////            ps = (PreparedStatement) conn.prepareStatement(sql);
+//            if (conn!=null){
+//                ps=  (PreparedStatement)conn.prepareStatement(sql);
+////                ps.setInt(1,memberInfo.getMemberId());
+//                ps.setString(1,memberInfo.getNickName());
+//                ps.setString(2,memberInfo.getRealName());
+//                ps.setString(3,memberInfo.getPhotoUrl());
+//                ps.setString(4,memberInfo.getPassword());
+//                ps.setString(5,memberInfo.getRegisterDate());
+//                ps.setString(6,memberInfo.getQQ());
+//                ps.setString(7,memberInfo.getPhone());
+//                ps.setString(8,memberInfo.getHobbies());
+//                ps.setString(9,memberInfo.getSex());
+//                ps.setString(10,memberInfo.getBirthday());
+//                ps.setString(11,memberInfo.getPostalAddress());
+//                ps.setInt(12,memberInfo.getPoints());
+//                ps.setString(13,memberInfo.getMatto());
+//                ps.setInt(14,memberInfo.getLevel());
+//                Log.d("insert","memberInfo");
+//                return ps.execute();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
     public boolean insertArtInfoData(ArtInfo artInfo){
         String sql = "insert into arts_info(url,create_date,release_date,price,tags,author_id,classify_id,theme_id,content,map_title)values(?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -269,7 +347,8 @@ public class DbDao {
                 ps.setString(9,artInfo.getContent());
                 ps.setString(10,artInfo.getMapTitle());
                 Log.d(TAG, "insertArtInfoData: 执行了插入艺术品");
-                return ps.execute();
+                ps.execute();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -314,10 +393,10 @@ public class DbDao {
     }
 
     public boolean insertCommentData(Comment comment){
-        String sql = "insert into arts_info(art_id,nick_name,comment,date,head_photo)values(?,?,?,?,?)";
+        String sql = "insert into comment(art_id,nick_name,comment,date,head_photo)values(?,?,?,?,?)";
         try {
-//            ps = (PreparedStatement) conn.prepareStatement(sql);
             if (conn!=null){
+                Log.d("获取数据", comment.getArtId() + "；" + comment.getHead() + "；" + comment.getNickName() + "；" + comment.getDate() + "；" + comment.getComment());
                 ps=  (PreparedStatement)conn.prepareStatement(sql);
                 ps.setInt(1,comment.getArtId());
                 ps.setString(2,comment.getNickName());
@@ -325,7 +404,8 @@ public class DbDao {
                 ps.setString(4,comment.getDate());
                 ps.setString(5,comment.getHead());
                 Log.d(TAG, "insertArtInfoData: 执行了插入评论");
-                return ps.execute();
+                ps.execute();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -344,7 +424,7 @@ public class DbDao {
         String sql2 = "select * from comment";
         Comment comment;
         try {
-            ps = (PreparedStatement) conn.prepareStatement( sql2 );
+            ps = (PreparedStatement) conn.prepareStatement( sql );
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 comment = new Comment();
@@ -360,7 +440,81 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dbConnection.closeConn();
+//            dbConnection.closeConn();
+        }
+        return commentList;
+    }
+
+    /**
+     * 查询艺术品的评论数
+     * @param artId
+     * @return
+     */
+    public int queryCommentNum(int artId){
+        String sql = "select * from comment where art_id = \'"+artId+"\'";
+        int acount = 0;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                acount++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "queryCommentNum: "+acount);
+        return acount;
+    }
+
+    public boolean insertCollector(Collector collector){
+        String sql = "insert into collector(member_id,arts_id,head_photo,arts_photo,collector_date)values(?,?,?,?,?)";
+        try {
+            if (conn!=null){
+                ps=  (PreparedStatement)conn.prepareStatement(sql);
+                ps.setInt(1,collector.getMemberId());
+                ps.setInt(2,collector.getArtsId());
+                ps.setString(3,collector.getHeadUrl());
+                ps.setString(4,collector.getArtUrl());
+                ps.setString(5,collector.getCollectorDate());
+//                ps.setString(6,collector.getMemberName());
+                Log.d(TAG, "insertArtInfoData: 执行了插入收藏");
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 查询collector表，将authorId创建的所有数据存到列表里面
+     * @return
+     */
+    public List<Collector> queryCollectorInfo(int memberId) {//查询方法，返回List
+        Log.d( "tag-querycollectioninfo","开始查询");
+        List<Collector> commentList = new ArrayList<>();
+        String sql = "select * from collector where member_id = \'"+memberId+"\'";
+        String sql2 = "select * from collector";
+        Collector collector;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                collector = new Collector();
+                collector.setId( resultSet.getInt( "id" ) );
+                collector.setMemberId( resultSet.getInt( "member_id" ) );
+//                collector.setMemberName(resultSet.getString("member_name"));
+                collector.setHeadUrl( resultSet.getString( "head_photo" ) );
+                collector.setArtsId( resultSet.getInt( "arts_id" ) );
+                collector.setArtUrl( resultSet.getString( "arts_photo" ) );
+                collector.setCollectorDate( resultSet.getString( "collector_date" ) );
+                commentList.add( collector );
+                Log.d( "tag-querycollectioninfo", collector.toString() );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            dbConnection.closeConn();
         }
         return commentList;
     }

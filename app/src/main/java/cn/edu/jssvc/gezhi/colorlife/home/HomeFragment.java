@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TuijianAdapter tuijianAdapter;
 
     private List<Arts_info> arts_info = new ArrayList<>();
+    private List<Integer> idList = new ArrayList<>();
 
     private CircleImageView imageView_fenlei_1,imageView_fenlei_2,imageView_fenlei_3,imageView_fenlei_4,imageView_fenlei_5,imageView_fenlei_6,imageView_fenlei_7,imageView_fenlei_8;
 
@@ -130,6 +132,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tuijianAdapter = new TuijianAdapter(getContext(),R.layout.fragment_home_listview_item, tuijianList);
         myListView.setAdapter(tuijianAdapter);
         myListView.setFocusable(false);
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), ContentActivity.class);
+                intent.putExtra("id", idList.get(position));
+                startActivity(intent);
+            }
+        });
 
         textView_shenqing = getActivity().findViewById(R.id.home_ShenqingRenzheng);
         textView_shenqing.setOnClickListener(this);
@@ -177,6 +187,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         for (Arts_info arts_info1 : arts_info) {
             tuijian = new Tuijian(arts_info1.getUrl(), arts_info1.getMaptilte(), "", "");
             tuijianList.add(tuijian);
+            idList.add(arts_info1.getArt_id());
             tuijianAdapter.notifyDataSetChanged();
         }
     }
