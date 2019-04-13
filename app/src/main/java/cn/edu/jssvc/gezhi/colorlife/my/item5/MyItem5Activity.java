@@ -179,12 +179,13 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
                             if(future.get()){
                                 conn.close();
                                 Log.d(TAG, "onSuccess: 上传成功！");
+//                                Toast.makeText(MyItem5Activity.this,"上传成功！",Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
-                                Toast.makeText(MyItem5Activity.this,"上传成功！",Toast.LENGTH_SHORT).show();
-                                finish();
+                                MyItem5Activity.this.finish();
                             }else {
+                                Log.d(TAG, "onSuccess: 上传失败！");
                                 progressDialog.dismiss();
-                                Toast.makeText(MyItem5Activity.this,"上传失败！",Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MyItem5Activity.this,"上传失败！",Toast.LENGTH_SHORT).show();
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -195,7 +196,8 @@ public class MyItem5Activity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onFailure() {
                         progressDialog.dismiss();
-                        Toast.makeText(MyItem5Activity.this,"上传失败！",Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onSuccess: 上传错误！");
+//                        Toast.makeText(MyItem5Activity.this,"上传失败！",Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (IOException e) {

@@ -46,6 +46,9 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
     private List<ArtInfo> artInfoList;
     private List<Collector> collectorList;
 
+
+    private int commentNum = 0;//评论数
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,18 +74,25 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
         switch (position) {
             case 1:
                 myitem1_title_tv.setText("艺术圈");
+                conn = dbDao.getConn();
                 for (int i = 0; i < MyApplication.mArtsInfoList.size(); i++) {
                     final Arts_info artInfo = MyApplication.mArtsInfoList.get(i);
                     Future<MemberInfo> future = MyApplication.executorService.submit(new Callable<MemberInfo>() {
                         @Override
                         public MemberInfo call() throws Exception {
-                            conn = DbConnection.getConnection();
+//                            conn = DbConnection.getConnection();
+                            if(conn == null){
+                                conn = DbConnection.getConnection();
+                            }
+                            commentNum = dbDao.queryCommentNum(artInfo.getArt_id());
                             return dbDao.queryMemberInfo(artInfo.getAuthor_id());
                         }
                     });
                     Item2_Bean bean = null;
                     try {
-                        bean = new Item2_Bean(future.get().getPhotoUrl(), future.get().getNickName(), artInfo.getContent(), artInfo.getUrl(), 24, 35, 62,false);
+                        bean = new Item2_Bean(future.get().getPhotoUrl(),
+                                future.get().getNickName(), artInfo.getContent(),
+                                artInfo.getUrl(), (int)(Math.random()*10+10), commentNum, 62,false);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
