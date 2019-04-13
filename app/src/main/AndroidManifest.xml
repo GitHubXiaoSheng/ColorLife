@@ -18,6 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".search.SearchItemActivity"
+            android:launchMode="singleTask">
+        </activity>
         <activity
             android:name=".my.item3.MyItem3Activity"
             android:launchMode="singleTask" />

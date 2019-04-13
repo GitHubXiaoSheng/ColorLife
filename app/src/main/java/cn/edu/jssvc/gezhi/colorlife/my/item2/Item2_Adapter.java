@@ -1,6 +1,7 @@
 package cn.edu.jssvc.gezhi.colorlife.my.item2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import cn.edu.jssvc.gezhi.colorlife.R;
+import cn.edu.jssvc.gezhi.colorlife.home.ContentActivity;
+import cn.edu.jssvc.gezhi.colorlife.home.Leibie_Activity;
 
 public class Item2_Adapter extends RecyclerView.Adapter<Item2_Adapter.ViewHolder> {
     private Context context;
@@ -72,6 +75,14 @@ public class Item2_Adapter extends RecyclerView.Adapter<Item2_Adapter.ViewHolder
                 }
             }
         });
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ContentActivity.class);
+                intent.putExtra("id", bean.getArtId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -80,6 +91,7 @@ public class Item2_Adapter extends RecyclerView.Adapter<Item2_Adapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private View view;
         private ImageView headImg;
         private TextView contentTv;
         private ImageView contentImg;
@@ -90,6 +102,7 @@ public class Item2_Adapter extends RecyclerView.Adapter<Item2_Adapter.ViewHolder
         private TextView like;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            view = itemView;
             headImg = (ImageView) itemView.findViewById(R.id.fragmy_itme1_head_img);
             contentTv = (TextView) itemView.findViewById(R.id.fragmy_itme1_content_tv);
             contentImg = (ImageView) itemView.findViewById(R.id.fragmy_itme1_content_img);

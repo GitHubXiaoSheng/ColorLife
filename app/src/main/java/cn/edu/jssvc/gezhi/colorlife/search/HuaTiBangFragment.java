@@ -41,12 +41,13 @@ public class HuaTiBangFragment extends Fragment {
     }
 
     void showList(){
-        Search_huati item1 = new Search_huati(R.drawable.lhd_search4,"秋天的田野","这是内容","讨论 2230","阅读 1.4万");
+        Search_huati item1 = new Search_huati(R.drawable.lhd_search4,"#美丽的海底世界#","如何提高水彩画的画画技巧","讨论 2230","阅读 1.4万");
         huatilist.add(item1);
-        Search_huati item2 = new Search_huati(R.drawable.lhd_search5,"秋天的田野","这是内容","讨论 2230","阅读 1.4万");
+        Search_huati item2 = new Search_huati(R.drawable.lhd_search5,"#秋天的田野#","油画的颜色怎样合理的搭配","讨论 2230","阅读 1.4万");
         huatilist.add(item2);
-        Search_huati item3= new Search_huati(R.drawable.lhd_search6,"秋天的田野","这是内容","讨论 2230","阅读 1.4万");
+        Search_huati item3= new Search_huati(R.drawable.lhd_search6,"#优秀的油画作品#","选出你心目中最好看的作品","讨论 2230","阅读 1.4万");
         huatilist.add(item3);
+
     }
     public class HuatiAdapter extends RecyclerView.Adapter<HuatiAdapter.ViewHolder>{
            private List<Search_huati>mHuaTiList;

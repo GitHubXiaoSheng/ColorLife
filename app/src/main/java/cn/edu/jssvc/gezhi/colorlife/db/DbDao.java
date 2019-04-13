@@ -138,6 +138,38 @@ public class DbDao {
         }
         return arts_infoList;
     }
+    public List<ArtInfo> queryAllArtsinfo() {    //查询方法，返回List
+        List<ArtInfo> arts_infoList = new ArrayList<>();
+        String sql = "select * from arts_info";
+        Log.d( "tag-querinfo11", sql);
+        ArtInfo arts_info;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement(sql);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                arts_info = new ArtInfo();
+                arts_info.setId(resultSet.getInt("art_id"));
+                arts_info.setUrl(resultSet.getString("url"));
+                arts_info.setCreateData(resultSet.getString("create_date"));
+                arts_info.setReleaseData(resultSet.getString("release_date"));
+                arts_info.setPrice(resultSet.getFloat("price"));
+                arts_info.setTags(resultSet.getString("tags")+"");
+                arts_info.setAuthorId(resultSet.getInt("author_id"));
+                arts_info.setClassifyId(resultSet.getInt("classify_id"));
+                arts_info.setThemeId(resultSet.getInt("theme_id"));
+                arts_info.setContent(resultSet.getString("content"));
+                arts_info.setMapTitle(resultSet.getString("map_title"));
+
+                arts_infoList.add(arts_info);
+                Log.d( TAG, arts_info.toString() );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            dbConnection.closeConn();
+        }
+        return arts_infoList;
+    }
 
     /**
      * 查询member_info表，将所有数据存到列表里面
@@ -296,7 +328,7 @@ public class DbDao {
 
     /**
      * 更改记录
-     * @param memberInfo 要更改的对象
+     * @param  //memberInfo 要更改的对象?
      * @return 是否更改成功
      */
 //    public boolean insertMemberInfoDataRegister(MemberInfo memberInfo,String str_dnagqian){
@@ -360,6 +392,7 @@ public class DbDao {
      * 查询arts_info表，将authorId创建的所有数据存到列表里面
      * @return
      */
+
     public List<ArtInfo> queryAllArtInfo( int authorId) {//查询方法，返回List
         List<ArtInfo> artInfoList = new ArrayList<>();
         String sql = "select * from arts_info where author_id = \'"+authorId+"\'";

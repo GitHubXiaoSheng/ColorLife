@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -73,100 +75,137 @@ public class MyItem2Activity extends AppCompatActivity implements View.OnClickLi
     private void initData() {
         switch (position) {
             case 1:
-                myitem1_title_tv.setText("艺术圈");
-                conn = dbDao.getConn();
-                for (int i = 0; i < MyApplication.mArtsInfoList.size(); i++) {
-                    final Arts_info artInfo = MyApplication.mArtsInfoList.get(i);
-                    Future<MemberInfo> future = MyApplication.executorService.submit(new Callable<MemberInfo>() {
-                        @Override
-                        public MemberInfo call() throws Exception {
-//                            conn = DbConnection.getConnection();
-                            if(conn == null){
-                                conn = DbConnection.getConnection();
-                            }
-                            commentNum = dbDao.queryCommentNum(artInfo.getArt_id());
-                            return dbDao.queryMemberInfo(artInfo.getAuthor_id());
-                        }
-                    });
-                    Item2_Bean bean = null;
-                    try {
-                        bean = new Item2_Bean(future.get().getPhotoUrl(),
-                                future.get().getNickName(), artInfo.getContent(),
-                                artInfo.getUrl(), (int)(Math.random()*10+10), commentNum, (int)(Math.random()*10+10),false);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    beanList.add(bean);
-                }
+                item1();
                 break;
             case 3:
-                myitem1_title_tv.setText("藏品");
-                Future<Boolean> colltorFuture = MyApplication.executorService.submit(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        conn = DbConnection.getConnection();
-                        collectorList = dbDao.queryCollectorInfo(memberId);
-                        for(int i=0;i<collectorList.size();i++){
-                            Collector collector = collectorList.get(i);
-                            commentNum = dbDao.queryCommentNum(collector.getArtsId());
-                            Item2_Bean bean = new Item2_Bean(imgUrl, account, "", collector.getArtUrl(), (int)(Math.random()*10+10), commentNum, (int)(Math.random()*10+10),true);
-                            beanList.add(bean );
-                        }
-                        return true;
-                    }
-                });
-                try {
-                    if(colltorFuture.get()){
-                        adapter.notifyDataSetChanged();
-                        if(!conn.isClosed()){
-                            conn.close();
-                        }
-                    }
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                item3();
                 break;
             case 4:
-                myitem1_title_tv.setText("我的艺术");
-                try {
-                    Future<Boolean> future = MyApplication.executorService.submit(new Callable<Boolean>() {
-                        @Override
-                        public Boolean call() throws Exception {
-                            conn = DbConnection.getConnection();
-                            artInfoList = dbDao.queryAllArtInfo(Shared.getInt(MyItem2Activity.this, "accountId", -1));
-                            for(int i=0;i<artInfoList.size();i++){
-                                ArtInfo artInfo = artInfoList.get(i);
-                                commentNum = dbDao.queryCommentNum(artInfo.getId());
-                                beanList.add(new Item2_Bean(imgUrl,account,artInfo.getContent(),artInfo.getUrl(),
-                                        (int)(Math.random()*10+10),commentNum,(int)(Math.random()*10+10),false));
-                            }
-                            return true;
-                        }
-                    });
-                    if(future.get()){
-                        adapter.notifyDataSetChanged();
-                        if(!conn.isClosed()){
-                            conn.close();
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                item4();
                 break;
             default:
                 break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+
+    private void item1(){
+        myitem1_title_tv.setText("艺术圈");
+        conn = dbDao.getConn();
+        Future<List<ArtInfo>> futures = MyApplication.executorService.submit(new Callable<List<ArtInfo>>() {
+            @Override
+            public List<ArtInfo> call() throws Exception {
+                if (conn == null) conn = DbConnection.getConnection();
+                return dbDao.queryAllArtsinfo();
+            }
+        });
+        int Size = 0;
+        try {
+            Size = futures.get().size();
+            artInfoList = futures.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(Size>0){
+            for (int i = Size-1; i > Size-15; i--) {
+                final ArtInfo artInfo = artInfoList.get(i);
+                Future<MemberInfo> future = MyApplication.executorService.submit(new Callable<MemberInfo>() {
+                    @Override
+                    public MemberInfo call() throws Exception {
+//                            conn = DbConnection.getConnection();
+                        if(conn == null){
+                            conn = DbConnection.getConnection();
+                        }
+                        commentNum = dbDao.queryCommentNum(artInfo.getId());
+                        return dbDao.queryMemberInfo(artInfo.getAuthorId());
+                    }
+                });
+                Item2_Bean bean = null;
+                try {
+                    bean = new Item2_Bean(future.get().getPhotoUrl(),
+                            future.get().getNickName(), artInfo.getContent(),
+                            artInfo.getUrl(), (int)(Math.random()*10+10), commentNum, (int)(Math.random()*10+10),false);
+                    bean.setArtId(artInfo.getId());
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                beanList.add(bean);
+            }
+        }else {
+            Toast.makeText(this, "没查询到记录！", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void item3(){
+        myitem1_title_tv.setText("藏品");
+        Future<Boolean> colltorFuture = MyApplication.executorService.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                conn = DbConnection.getConnection();
+                collectorList = dbDao.queryCollectorInfo(memberId);
+                for(int i=0;i<collectorList.size();i++){
+                    Collector collector = collectorList.get(i);
+                    commentNum = dbDao.queryCommentNum(collector.getArtsId());
+                    Item2_Bean bean = new Item2_Bean(imgUrl, account, "", collector.getArtUrl(), (int) (Math.random() * 10 + 10), commentNum, (int) (Math.random() * 10 + 10), true);
+                    bean.setArtId(collector.getArtsId());
+                    beanList.add(bean );
+                }
+                return true;
+            }
+        });
+        try {
+            if(colltorFuture.get()){
+                adapter.notifyDataSetChanged();
+                if(!conn.isClosed()){
+                    conn.close();
+                }
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void item4(){
+        myitem1_title_tv.setText("我的艺术");
+        try {
+            Future<Boolean> future = MyApplication.executorService.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    conn = DbConnection.getConnection();
+                    artInfoList = dbDao.queryAllArtInfo(Shared.getInt(MyItem2Activity.this, "accountId", -1));
+                    for(int i=0;i<artInfoList.size();i++){
+                        ArtInfo artInfo = artInfoList.get(i);
+                        commentNum = dbDao.queryCommentNum(artInfo.getId());
+                        Item2_Bean bean = new Item2_Bean(imgUrl, account, artInfo.getContent(), artInfo.getUrl(),
+                                (int) (Math.random() * 10 + 10), commentNum, (int) (Math.random() * 10 + 10), false);
+                        bean.setArtId(artInfo.getId());
+                        beanList.add(bean);
+                    }
+                    return true;
+                }
+            });
+            if(future.get()){
+                adapter.notifyDataSetChanged();
+                if(!conn.isClosed()){
+                    conn.close();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

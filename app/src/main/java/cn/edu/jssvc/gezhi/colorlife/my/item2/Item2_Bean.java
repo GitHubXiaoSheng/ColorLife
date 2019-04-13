@@ -8,6 +8,7 @@ public class Item2_Bean {
     private int share;//分享数
     private int comment;//讨论数
     private int like;//喜欢数
+    private int artId;
     private boolean isLikeing;
 
     public Item2_Bean(String headImgUrl, String name, String content, String contentmgUrl, int share, int comment, int like, boolean isLike) {
@@ -19,6 +20,14 @@ public class Item2_Bean {
         this.comment = comment;
         this.like = like;
         this.isLikeing = isLike;
+    }
+
+    public int getArtId() {
+        return artId;
+    }
+
+    public void setArtId(int artId) {
+        this.artId = artId;
     }
 
     public boolean isLikeing() {
@@ -95,6 +104,7 @@ public class Item2_Bean {
                 ", share=" + share +
                 ", comment=" + comment +
                 ", like=" + like +
+                ", artId=" + artId +
                 ", isLikeing=" + isLikeing +
                 '}';
     }
