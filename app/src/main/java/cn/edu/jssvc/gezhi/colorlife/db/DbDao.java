@@ -8,9 +8,6 @@ import android.util.Log;
 
 
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -137,7 +134,7 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dbConnection.closeConn();
+//            dbConnection.closeConn();
         }
         return arts_infoList;
     }
@@ -315,7 +312,8 @@ public class DbDao {
                 ps.setString(9,artInfo.getContent());
                 ps.setString(10,artInfo.getMapTitle());
                 Log.d(TAG, "insertArtInfoData: 执行了插入艺术品");
-                return ps.execute();
+                ps.execute();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -406,9 +404,30 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dbConnection.closeConn();
+//            dbConnection.closeConn();
         }
         return commentList;
+    }
+
+    /**
+     * 查询艺术品的评论数
+     * @param artId
+     * @return
+     */
+    public int queryCommentNum(int artId){
+        String sql = "select * from comment where art_id = \'"+artId+"\'";
+        int acount = 0;
+        try {
+            ps = (PreparedStatement) conn.prepareStatement( sql );
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                acount++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "queryCommentNum: "+acount);
+        return acount;
     }
 
     public boolean insertCollector(Collector collector){
@@ -459,7 +478,7 @@ public class DbDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dbConnection.closeConn();
+//            dbConnection.closeConn();
         }
         return commentList;
     }
