@@ -48,7 +48,7 @@ private View view;
     private List<String>list = new ArrayList<String>();
     private ArrayList<Fragment> fragmentList;
     private List<String> list_Title;
-    private boolean isKeyUp;
+    private boolean isKeyUp=true;
     private LinearLayout linearLayout;
     private MyAdapter adapter = null;
     private Button search;
@@ -135,6 +135,7 @@ private View view;
             @Override
             public void onClick(View v) {
                 editText.setText("");
+                editText.clearFocus();
             }
         });
         search.setOnClickListener(new View.OnClickListener() {
