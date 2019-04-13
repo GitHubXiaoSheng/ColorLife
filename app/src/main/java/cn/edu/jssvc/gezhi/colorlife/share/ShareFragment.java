@@ -1,30 +1,31 @@
 package cn.edu.jssvc.gezhi.colorlife.share;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-        import android.content.Context;
-        import android.graphics.Color;
-        import android.graphics.Typeface;
-        import android.net.Uri;
-        import android.os.Bundle;
-        import android.support.v4.app.Fragment;
-        import android.support.v4.app.FragmentManager;
-        import android.support.v4.app.FragmentTransaction;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.FrameLayout;
-        import android.widget.LinearLayout;
-        import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
-        import java.util.ArrayList;
-        import java.util.List;
+import cn.edu.jssvc.gezhi.colorlife.R;
+import cn.edu.jssvc.gezhi.colorlife.home.HomeFragment;
 
-        import cn.edu.jssvc.gezhi.colorlife.R;
-        import cn.edu.jssvc.gezhi.colorlife.home.HomeFragment;
+
+
 
 public class ShareFragment extends Fragment implements View.OnClickListener {
     private TextView followTV,hotTv,followTvline,hotTvline;
     private LinearLayout replacefragment;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

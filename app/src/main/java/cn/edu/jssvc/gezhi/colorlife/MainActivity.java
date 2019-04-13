@@ -1,13 +1,16 @@
 package cn.edu.jssvc.gezhi.colorlife;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import java.sql.Connection;
@@ -105,6 +108,36 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 //        bottomNavigationView.setSelectedItemId(index);
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 按下键盘上返回按钮
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            exitAppDialog();
+
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
+    }
+
+    public void exitAppDialog() {
+        new AlertDialog.Builder(this)
+                // .setIcon(android.R.drawable.ic_menu_info_detailsp)
+                .setTitle("提示").setMessage("你确定要退出吗").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener()
+
+        {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finish();
+            }
+        }).show();
+
     }
 
 }

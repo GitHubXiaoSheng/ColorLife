@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_gray"
                 android:gravity="center"
-                android:text="粉丝：1632"
+                android:text="粉丝：16"
                 android:layout_marginLeft="150dp"/>
 
             <TextView
@@ -84,7 +84,7 @@
                 android:layout_alignParentRight="true"
                 android:textColor="@color/text_gray"
                 android:layout_marginRight="10dp"
-                android:text="赞：3695" />
+                android:text="赞：95" />
 
         </RelativeLayout>
 
