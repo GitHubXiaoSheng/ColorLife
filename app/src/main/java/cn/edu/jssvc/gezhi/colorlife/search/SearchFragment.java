@@ -1,5 +1,6 @@
 package cn.edu.jssvc.gezhi.colorlife.search;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,11 +50,11 @@ private View view;
     private List<String>list = new ArrayList<String>();
     private ArrayList<Fragment> fragmentList;
     private List<String> list_Title;
-    private boolean isKeyUp;
+    private boolean isKeyUp=true;
     private LinearLayout linearLayout;
     private MyAdapter adapter = null;
     private Button search;
-    private ImageView delete;
+    private ImageView delete,delete2;
 
     private String mNames[] = {
             "水彩画细节","如何提高画画技术","中西结合的作品",
@@ -91,7 +93,7 @@ private View view;
 //        initSearch();
         setData();
 
-            initView();
+        initView();
 
 
 
@@ -114,16 +116,16 @@ private View view;
     protected void setItemClick(final List<String> filter_lists) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+                                    final int position, long id) {
                 // 点击对应的item时，弹出toast提示所点击的内容
                 Toast.makeText(getContext(), filter_lists.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
-//    private void initData() {
-//
-//
-//    }
+    private void initData() {
+
+
+    }
 
 
     void replacefragment(Fragment fragment){
@@ -131,10 +133,14 @@ private View view;
     }
 
     void initedit(){
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText.setText("");
+                editText.clearFocus();
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
         search.setOnClickListener(new View.OnClickListener() {

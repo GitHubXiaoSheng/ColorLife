@@ -1,5 +1,8 @@
 package cn.edu.jssvc.gezhi.colorlife;
 
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.edu.jssvc.gezhi.colorlife.db.DbConnection;
 import cn.edu.jssvc.gezhi.colorlife.db.DbDao;
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static int MainEntry = R.id.main_navigation_2;
     public static int MainShare = R.id.main_navigation_3;
     public static int MainMy = R.id.main_navigation_4;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        DbDao dbDao = new DbDao();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        },0,10 * 1000);
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.mian_bottomnavigationview);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -48,11 +63,28 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new HomeFragment()).commit();
     }
 
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                new DbDao();
+            }
+        }
+    };
+
     @Override
     protected void onStart() {
         super.onStart();
 //        index = getIntent().getIntExtra("BackToMainAction", R.id.main_navigation_1);
 //        replaceFragment(index);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 
     private void replaceFragment(int index){
