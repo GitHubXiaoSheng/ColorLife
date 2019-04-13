@@ -281,6 +281,7 @@ public class DbDao {
      * 查询arts_info表，将authorId创建的所有数据存到列表里面
      * @return
      */
+
     public List<ArtInfo> queryAllArtInfo( int authorId) {//查询方法，返回List
         List<ArtInfo> artInfoList = new ArrayList<>();
         String sql = "select * from arts_info where author_id = \'"+authorId+"\'";
