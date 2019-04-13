@@ -29,6 +29,7 @@ import cn.edu.jssvc.gezhi.colorlife.login.LoginActivity;
 import cn.edu.jssvc.gezhi.colorlife.my.follow.MyFollowActivity;
 import cn.edu.jssvc.gezhi.colorlife.my.item2.MyItem2Activity;
 import cn.edu.jssvc.gezhi.colorlife.my.item5.MyItem5Activity;
+import cn.edu.jssvc.gezhi.colorlife.my.setting.SettingActivity;
 import cn.edu.jssvc.gezhi.colorlife.util.Shared;
 
 public class MyFragment extends Fragment implements View.OnClickListener{
@@ -148,6 +149,8 @@ public class MyFragment extends Fragment implements View.OnClickListener{
             case R.id.fragmy_item6_layout:
                 break;
             case R.id.fragmy_item7_layout:
+                Intent item7Intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(item7Intent);
                 break;
             default:
                 break;
